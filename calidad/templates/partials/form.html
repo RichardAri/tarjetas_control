@@ -1,0 +1,27 @@
+<form hx-post="{% url 'create-recurso' %}" >
+    <div class="row">
+        <div class="col-4 col-md-3">
+            <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}</label>
+            {{ form.nombre }}
+        </div>
+        <div class="col-4 col-md-3">
+            <label for="{{ form.calidad_peligro.id_for_label }}">{{ form.calidad_peligro.label }}</label>
+            {{ form.calidad_peligro }}
+        </div>
+        <div class="col-4 col-md-3">
+            <label for="{{ form.calidad_riesgo.id_for_label }}">{{ form.calidad_riesgo.label }}</label>
+            {{ form.calidad_riesgo }}
+        </div>
+        <div class="col-4 col-md-3">
+            <label for="{{ form.calidad_causas.id_for_label }}">{{ form.calidad_causas.label }}</label>
+            {{ form.calidad_causas }}
+        </div>
+        <div class="col-4 col-md-3">
+            <label for="{{ form.calidad_control.id_for_label }}">{{ form.calidad_control.label }}</label>
+            {{ form.calidad_control }}
+        </div>
+        <div class="col-3 align-self-end">
+            <button class="btn btn-primary" type="submit">Enviar</button>
+        </div>
+    </div>
+</form>

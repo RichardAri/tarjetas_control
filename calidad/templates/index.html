@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    CAlidad
+{% endblock %}
+
+{% block content %}
+    <!-- Aquí va el contenido específico de la página de Recursos de Calidad -->
+    <h1 class="mb-4 text-primary">Añadir Recurso de calidad</h1>
+
+    <div id="recursos-forms">
+        {% include 'partials/form.html' %}
+    </div>
+
+    <div class="my-4">
+        <button type="button" class="btn btn-success me-2"
+        hx-get="{% url 'create-recurso' %}"
+        hx-target="#recursos-forms"
+        hx-swap="beforeend">Añadir Recurso</button>
+    </div>
+
+    <ul id="recurso-list">
+        {% for recurso in recursos %}
+            {% include 'partials/recurso.html' %}
+        {% endfor %}
+    </ul>
+
+{% endblock %}

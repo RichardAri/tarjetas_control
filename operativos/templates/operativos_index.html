@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4 text-primary">Añadir Operativos</h1>
+
+
+<div id="operativo-forms">
+    {% include 'partials/form_seguridad.html' %}
+</div>
+
+<div class="my-4">
+    <button type="button" class="btn btn-success me-2"
+    hx-get="{%  url 'create-operativo' %}"
+    hx-target="#operativo-forms"
+    hx-swap="beforeend"> Crear formulario</button> 
+    <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>  
+</div>
+
+<ul id="operativos-list">
+    {% for operativo in operativos %}
+        {% include 'partials/operativos.html' %}
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
