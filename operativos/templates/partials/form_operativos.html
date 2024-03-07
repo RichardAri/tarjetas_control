@@ -1,0 +1,50 @@
+<form hx-post="{% url 'create-operativo' %}" hx-target="#operativos-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
+    <div class="d-flex flex-row flex-nowrap overflow-auto align-items-center">
+        <!-- Nombre -->
+        <div class="p-2">
+            <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
+            {{ form.nombre }}
+        </div>
+        
+        <!-- Equipos -->
+        <div class="p-2">
+            <label for="{{ form.operativo_equipos.id_for_label }}" class="form-label">Equipos</label>
+            {{ form.operativo_equipos }}
+        </div>
+        
+        <!-- Materiales -->
+        <div class="p-2">
+            <label for="{{ form.operativo_materiales.id_for_label }}" class="form-label">Materiales</label>
+            {{ form.operativo_materiales }}
+        </div>
+        
+        <!-- Herramientas -->
+        <div class="p-2">
+            <label for="{{ form.operativo_herramientas.id_for_label }}" class="form-label">Herramientas</label>
+            {{ form.operativo_herramientas }}
+        </div>
+        
+        <!-- Mano de Obra -->
+        <div class="p-2">
+            <label for="{{ form.operativo_manodeobra.id_for_label }}" class="form-label">Mano de obra</label>
+            {{ form.operativo_manodeobra }}
+        </div>
+        
+        <!-- EPPs -->
+        <div class="p-2">
+            <label for="{{ form.operativo_epps.id_for_label }}" class="form-label">EPPs</label>
+            {{ form.operativo_epps }}
+        </div>
+        
+        <!-- Generales -->
+        <div class="p-2">
+            <label for="{{ form.operativo_generales.id_for_label }}" class="form-label">Generales</label>
+            {{ form.operativo_generales }}
+        </div>
+        
+        <!-- Botón de acción -->
+        <div class="p-2 align-btn">
+            <button class="btn btn-danger" type="button" hx-on="click: this.closest('form').remove()">Cancelar</button>
+        </div>
+    </div>
+</form>

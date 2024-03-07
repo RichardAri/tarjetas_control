@@ -4,10 +4,6 @@ from modelos.models import RecursoOperativo
 from operativos.forms import OperativoForm
 
 # Create your views here.
-def recursos_operativos(request):
-    # Tu lógica aquí
-    return render(request, 'operativos/recursos_operativos.html')
-
 def index(request):
     # Aquí puedes colocar cualquier lógica adicional que necesites
     context = {'form': OperativoForm(), 'operativos': RecursoOperativo.objects.all()}
@@ -22,4 +18,4 @@ def create_operativo(request):
             return render(request, 'partials/operativos.html', context)
 
 
-    return render(request, 'partials/form_seguridad.html', {'form': OperativoForm()})   
+    return render(request, 'partials/form_operativos.html', {'form': OperativoForm()})   

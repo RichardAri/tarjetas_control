@@ -1,44 +1,30 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from modelos.models import RecursoSeguridad
+from seguridad.forms import SeguridadForm
 
-from seguridad.forms import RecursoSeguridadForm
-
-# Create your views here.
-def recursos_seguridad(request):
-    # Tu lógica aquí
-    return render(request, 'seguridad/recursos_seguridad.html')
 
 
 #HTMX METHODS
 def index(request):
-    recursos = RecursoSeguridad.objects.all()
-    return render(request, 'recurso_seguridad/index.html', {'recursos': recursos})
+    # Aquí puedes colocar cualquier lógica adicional que necesites
+    context = {'form': SeguridadForm(), 'seguridades': RecursoSeguridad.objects.all()}
+    return render(request, 'index_seguridad.html', context)
 
-def recurso_seguridad_create(request):
+def create_seguridad(request):
     if request.method == 'POST':
-        form = RecursoSeguridadForm(request.POST)
+        form = SeguridadForm(request.POST or None)
         if form.is_valid():
-            form.save()
-            return redirect('recurso-seguridad-list')
-    else:
-        form = RecursoSeguridadForm()
-    return render(request, 'recurso_seguridad/form.html', {'form': form})
+            seguridad = form.save()
+            context = {'seguridad': seguridad}
+            return render(request, "partials/seguridad.html", context)
 
-def recurso_seguridad_update(request, pk):
-    recurso = get_object_or_404(RecursoSeguridad, pk=pk)
-    if request.method == 'POST':
-        form = RecursoSeguridadForm(request.POST, instance=recurso)
-        if form.is_valid():
-            form.save()
-            return redirect('recurso-seguridad-list')
-    else:
-        form = RecursoSeguridadForm(instance=recurso)
-    return render(request, 'recurso_seguridad/form.html', {'form': form})
+    return render(request, 'partials/form_seguridad.html', {'form': SeguridadForm()})
 
-def recurso_seguridad_delete(request, pk):
-    recurso = get_object_or_404(RecursoSeguridad, pk=pk)
-    recurso.delete()
-    return redirect('recurso-seguridad-list')
+# class RecursoSeguridad(models.Model):
+#     nombre = models.CharField(max_length=100, blank=True, null=True)
+#     seguridad_peligro = models.CharField(max_length=100, blank=True, null=True)
+#     seguridad_riesgo = models.CharField(max_length=100, blank=True, null=True)
+#     seguridad_control = models.CharField(max_length=100, blank=True, null=True)
+#     # Otros campos relevantes para los recursos de seguridad
 
-# END OD HTMX METHODS

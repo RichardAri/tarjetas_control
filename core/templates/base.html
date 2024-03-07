@@ -4,31 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mi Proyecto{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .fixed-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030; /* Bootstrap navbar z-index */
+        }
+        .btn-group-justified {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn-group-justified .btn {
+            flex-grow: 1;
+            text-align: center;
+        }
+    </style>
     <script src="https://unpkg.com/hyperscript.org@0.9.5"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.2" integrity=""></script>
-    <!-- Agrega aquí tus archivos de estilos CSS, si es necesario -->
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-<nav>
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'calidad_index' %}">Recursos de Calidad</a></li>
-        <li><a href="{% url 'recurso_seguridad' %}">Recursos de Seguridad</a></li>
-        <li><a href="{% url 'operativos_index' %}">Recursos Operativos</a></li>
-        <li><a href="{% url 'tareas' %}">Tareas</a></li>
-        <li><a href="{% url 'tarjetas_control' %}">Tarjetas Control</a></li>
-        <!-- Añade aquí más enlaces según sea necesario -->
-    </ul>
-</nav>
-
-<div class="content">
+<div class="container mt-4">
     {% block content %}
+    <!-- Contenido principal aquí -->
     {% endblock %}
 </div>
 
-<!-- Agrega aquí tus scripts JavaScript, si es necesario -->
+<div class="fixed-bottom-bar bg-light">
+    <div class="btn-group-justified" role="group" aria-label="Barra de botones fijada en el fondo">
+        <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+        <a href="{% url 'calidad_index' %}" class="btn btn-secondary">Calidad</a>
+        <a href="{% url 'seguridad_index' %}" class="btn btn-secondary">Seguridad</a>
+        <a href="{% url 'operativos_index' %}" class="btn btn-secondary">Operativos</a>
+        <a href="{% url 'crear-tarea' %}" class="btn btn-secondary">Tareas</a>
+        <a href="" class="btn btn-secondary">Tarjeta de control</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

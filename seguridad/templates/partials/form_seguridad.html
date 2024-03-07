@@ -1,0 +1,25 @@
+<form hx-post="{% url 'create-seguridad' %}" hx-target="#seguridad-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
+    <div class="row">
+        <div class="col-3 col-md-2">
+            <label for="{{ form.clase_seguridad.id_for_label }}"> {{ form.clase_seguridad.label }}</label>
+            {{ form.clase_seguridad }}
+        </div>
+        <div class="col-3 col-md-2">
+            <label for="{{ form.seguridad_peligro.id_for_label }}"> {{ form.seguridad_peligro.label }}</label>
+            {{ form.seguridad_peligro }}
+        </div>
+        <div class="col-3 col-md-2">
+            <label for="{{ form.seguridad_riesgo.id_for_label }}"> {{ form.seguridad_riesgo.label }}</label>
+            {{ form.seguridad_riesgo }}
+        </div>
+        <div class="col-3 col-md-2">
+            <label for="{{ form.seguridad_control.id_for_label }}"> {{ form.seguridad_control.label }}</label>
+            {{ form.seguridad_control }}
+        </div>
+
+        <div class="col-3 align-self-end">
+            <button class="btn btn-danger" type="button" hx-on="click: this.closest('form').remove()">Cancelar</button>
+        </div>
+
+    </div>
+</form>
