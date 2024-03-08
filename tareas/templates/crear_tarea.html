@@ -1,14 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %}Crear Tarea{% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h1>Crear Nueva Tarea</h1>
 
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    
+    <p>Selecciona uno o más recursos de seguridad, calidad y operativos para la tarea.</p>
     <button type="submit" class="btn btn-primary">Guardar Tarea</button>
+    {{ form|crispy }}
+    
 </form>
 
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Tarjeta de Control{% endblock %}
+
+{% block content %}
+<h1>Detalle de Tarjeta de Control: {{ tarjeta.titulo }}</h1>
+<p><strong>Fecha de Creación:</strong> {{ tarjeta.fecha_creacion|date:"Y-m-d H:i" }}</p>
+<p><strong>Valorización:</strong> {{ tarjeta.valorizacion }}</p>
+<p><strong>Número de Tareas Asociadas:</strong> {{ tarjeta.num_tareas }}</p>
+
+<h2>Tareas Asociadas</h2>
+<ul>
+    {% for tarea in tarjeta.tareas.all %}
+        <li>{{ tarea.verbo }} {{ tarea.objeto }} - Orden de Venta: {{ tarea.orden_de_venta }}</li>
+    {% empty %}
+        <li>No hay tareas asociadas a esta tarjeta.</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'listar_tarjetas_control' %}" class="btn btn-secondary">Volver al Listado</a>
+{% endblock %}

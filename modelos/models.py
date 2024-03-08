@@ -1,7 +1,7 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.core.validators import MinValueValidator, MaxValueValidator
 from core import settings
-from django.core.validators import MaxValueValidator, MinValueValidator
 
 class RecursoSeguridad(models.Model):
     clase_seguridad = models.CharField(max_length=100, blank=True, null=True)
@@ -10,7 +10,7 @@ class RecursoSeguridad(models.Model):
     seguridad_control = models.CharField(max_length=100, blank=True, null=True)
     # Otros campos relevantes para los recursos de seguridad
     def __str__(self):
-        return self.clase_seguridad or "Recurso de Seguridad sin nombre"
+        return self.seguridad_peligro or "Recurso de Seguridad sin nombre"
 
 class RecursoCalidad(models.Model):
     nombre = models.CharField(max_length=100, blank=True, null=True)
@@ -20,7 +20,7 @@ class RecursoCalidad(models.Model):
     calidad_control = models.CharField(max_length=100, blank=True, null=True)
     # Otros campos relevantes para los recursos de calidad
     def __str__(self):
-        return self.nombre or "Recurso de Calidad sin nombre"
+        return self.calidad_peligro or "Recurso de Calidad sin nombre"
 
 class RecursoOperativo(models.Model):
     nombre = models.CharField(max_length=100, blank=True, null=True)
@@ -34,20 +34,34 @@ class RecursoOperativo(models.Model):
     # Otros campos relevantes para los recursos operativos
 
     def __str__(self):
-        return self.nombre or "Recurso Operativo sin nombre"
+        campos = [
+            self.nombre or "sin nombre",
+            self.operativo_equipos or "sin equipos",
+            self.operativo_materiales or "sin materiales",
+            self.operativo_herramientas or "sin herramientas",
+            self.operativo_manodeobra or "sin manodeobra",
+            self.operativo_epps or "sin epps",
+            self.operativo_generales or "sin generales",
+        ]
+        return " | ".join(campos)
 
 class Tarea(models.Model):
     verbo = models.CharField(max_length=100)
     objeto = models.CharField(max_length=100)
     orden_de_venta = models.CharField(max_length=100, null=True, blank=True)
-    recurso_seguridad = models.ForeignKey(RecursoSeguridad, on_delete=models.CASCADE, related_name='tareas', null=True, blank=True)
-    recurso_calidad = models.ForeignKey(RecursoCalidad, on_delete=models.CASCADE, related_name='tareas', null=True, blank=True)
-    recurso_operativo = models.ForeignKey(RecursoOperativo, on_delete=models.CASCADE, related_name='tareas', null=True, blank=True)
+    recurso_seguridad = models.ManyToManyField(RecursoSeguridad, related_name='tareas', blank=True)
+    recurso_calidad = models.ManyToManyField(RecursoCalidad, related_name='tareas', blank=True)
+    recurso_operativo = models.ManyToManyField(RecursoOperativo, related_name='tareas', blank=True)
+
+    def __str__(self):
+        return f"{self.verbo} {self.objeto}"
+
 class TarjetaDeControl(models.Model):
     titulo = models.CharField(max_length=100)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     valorizacion = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)])
     tareas = models.ManyToManyField('Tarea', related_name='tarjetas_de_control')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tarjetas_de_control')
 
     def __str__(self):
         return self.titulo
@@ -55,6 +69,7 @@ class TarjetaDeControl(models.Model):
     @property
     def num_tareas(self):
         return self.tareas.count()
+
 
     
     # Más métodos y propiedades según sea necesario

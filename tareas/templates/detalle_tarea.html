@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Tarea{% endblock %}
+
+{% block content %}
+<h1>Detalle de Tarea: {{ tarea.verbo }} {{ tarea.objeto }}</h1>
+<p>Orden de Venta: {{ tarea.orden_de_venta }}</p>
+
+<h2>Recursos de Seguridad</h2>
+<ul>
+    {% for recurso in tarea.recurso_seguridad.all %}
+        <li>{{ recurso.clase_seguridad }} - Peligro: {{ recurso.seguridad_peligro }} - Riesgo: {{ recurso.seguridad_riesgo }} - Control: {{ recurso.seguridad_control }}</li>
+    {% empty %}
+        <li>No hay recursos de seguridad asociados.</li>
+    {% endfor %}
+</ul>
+
+<h2>Recursos de Calidad</h2>
+<ul>
+    {% for recurso in tarea.recurso_calidad.all %}
+        <li>{{ recurso.nombre }} - Peligro: {{ recurso.calidad_peligro }} - Riesgo: {{ recurso.calidad_riesgo }} - Causas: {{ recurso.calidad_causas }} - Control: {{ recurso.calidad_control }}</li>
+    {% empty %}
+        <li>No hay recursos de calidad asociados.</li>
+    {% endfor %}
+</ul>
+
+<h2>Recursos Operativos</h2>
+<ul>
+    {% for recurso in tarea.recurso_operativo.all %}
+        <li>{{ recurso.nombre }} - Equipos: {{ recurso.operativo_equipos }} - Materiales: {{ recurso.operativo_materiales }} - Herramientas: {{ recurso.operativo_herramientas }} - Mano de obra: {{ recurso.operativo_manodeobra }} - EPPs: {{ recurso.operativo_epps }} - Generales: {{ recurso.operativo_generales }}</li>
+    {% empty %}
+        <li>No hay recursos operativos asociados.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

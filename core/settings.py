@@ -30,6 +30,9 @@ INSTALLED_APPS = [
     'tareas',
     'tarjetas_control',
     'django_htmx',
+    'cuentas',
+    'crispy_forms',
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -120,3 +123,8 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+LOGIN_URL = 'login'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,0 +1,12 @@
+<!-- cuentas/templates/registration/login.html -->
+{% extends 'base.html' %} <!-- Asegúrate de tener un template base o elimina esta línea -->
+
+{% block content %}
+<h2>Iniciar Sesión</h2>
+<h3><a href="{% url 'register' %}">Crea tu cuentilla</a></h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Iniciar Sesión</button>
+</form>
+{% endblock %}
