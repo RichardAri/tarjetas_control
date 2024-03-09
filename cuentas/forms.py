@@ -7,7 +7,8 @@ from crispy_forms.layout import Layout, Submit, Div
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    rol = forms.CharField(required=True)
+    # Actualiza el campo 'rol' para usar ChoiceField
+    rol = forms.ChoiceField(choices=UserProfile.ROLES, required=True, label="Rol")
     empresa = forms.CharField(required=True)
 
     class Meta:

@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+
+from cuentas.models import UserProfile
 from .forms import UserRegistrationForm  # Asegúrate de haber creado este formulario
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -9,9 +11,21 @@ def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
+            # Guarda el nuevo objeto User creado por el formulario
             user = form.save()
-            login(request, user)  # Inicia sesión automáticamente al usuario después de registrarse
-            return redirect('home')  # Redirige a la página principal después del registro exitoso
+
+            # Crea un UserProfile con la información adicional
+            UserProfile.objects.create(
+                user=user,
+                rol=form.cleaned_data['rol'],
+                empresa=form.cleaned_data['empresa']
+            )
+
+            # Inicia sesión automáticamente al usuario después de registrarse
+            login(request, user)
+
+            # Redirige a la página principal después del registro exitoso
+            return redirect('home')
     else:
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})

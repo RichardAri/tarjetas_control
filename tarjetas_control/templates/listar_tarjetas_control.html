@@ -12,6 +12,7 @@
             <th>Fecha de Creación</th>
             <th>Valorización</th>
             <th>Número de Tareas</th>
+            <th>Creado por</th> <!-- Nueva columna para el nombre de usuario -->
             <th>Acciones</th>
         </tr>
     </thead>
@@ -22,6 +23,7 @@
             <td>{{ tarjeta.fecha_creacion|date:"Y-m-d H:i" }}</td>
             <td>{{ tarjeta.valorizacion }}</td>
             <td>{{ tarjeta.num_tareas }}</td>
+            <td>{{ tarjeta.usuario.username }}</td> <!-- Muestra el nombre de usuario del creador -->
             <td>
                 <a href="{% url 'detalle_tarjeta_control' tarjeta.id %}" class="btn btn-info">Ver Detalle</a>
                 <a href="{% url 'editar_tarjeta_control' tarjeta.id %}" class="btn btn-primary">Editar</a>
