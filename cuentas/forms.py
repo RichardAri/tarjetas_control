@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import UserProfile
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Div
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -12,14 +14,12 @@ class UserRegistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'rol', 'empresa']
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-            UserProfile.objects.create(
-                user=user,
-                rol=self.cleaned_data['rol'],
-                empresa=self.cleaned_data['empresa']
-            )
-        return user
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.layout = Layout(
+            Div('username', 'email', css_class='form-group'),
+            Div('password1', 'password2', css_class='form-group'),
+            Div('rol', 'empresa', css_class='form-group'),
+            Submit('submit', 'Registrar', css_class='btn btn-primary mt-3')
+        )

@@ -3,34 +3,94 @@
 {% block title %}Detalle de Tarea{% endblock %}
 
 {% block content %}
-<h1>Detalle de Tarea: {{ tarea.verbo }} {{ tarea.objeto }}</h1>
-<p>Orden de Venta: {{ tarea.orden_de_venta }}</p>
+<div class="container my-4">
+    <h1>Detalle de Tarea: {{ tarea.verbo }} {{ tarea.objeto }}</h1>
+    <p>Orden de Venta: {{ tarea.orden_de_venta }}</p>
 
-<h2>Recursos de Seguridad</h2>
-<ul>
-    {% for recurso in tarea.recurso_seguridad.all %}
-        <li>{{ recurso.clase_seguridad }} - Peligro: {{ recurso.seguridad_peligro }} - Riesgo: {{ recurso.seguridad_riesgo }} - Control: {{ recurso.seguridad_control }}</li>
-    {% empty %}
-        <li>No hay recursos de seguridad asociados.</li>
-    {% endfor %}
-</ul>
+    <h2>Recursos de Seguridad</h2>
+    {% if tarea.recurso_seguridad.all %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Clase de Seguridad</th>
+                <th>Peligro</th>
+                <th>Riesgo</th>
+                <th>Control</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recurso in tarea.recurso_seguridad.all %}
+            <tr>
+                <td>{{ recurso.clase_seguridad }}</td>
+                <td>{{ recurso.seguridad_peligro }}</td>
+                <td>{{ recurso.seguridad_riesgo }}</td>
+                <td>{{ recurso.seguridad_control }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay recursos de seguridad asociados.</p>
+    {% endif %}
 
-<h2>Recursos de Calidad</h2>
-<ul>
-    {% for recurso in tarea.recurso_calidad.all %}
-        <li>{{ recurso.nombre }} - Peligro: {{ recurso.calidad_peligro }} - Riesgo: {{ recurso.calidad_riesgo }} - Causas: {{ recurso.calidad_causas }} - Control: {{ recurso.calidad_control }}</li>
-    {% empty %}
-        <li>No hay recursos de calidad asociados.</li>
-    {% endfor %}
-</ul>
+    <h2>Recursos de Calidad</h2>
+    {% if tarea.recurso_calidad.all %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Peligro</th>
+                <th>Riesgo</th>
+                <th>Causas</th>
+                <th>Control</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recurso in tarea.recurso_calidad.all %}
+            <tr>
+                <td>{{ recurso.nombre }}</td>
+                <td>{{ recurso.calidad_peligro }}</td>
+                <td>{{ recurso.calidad_riesgo }}</td>
+                <td>{{ recurso.calidad_causas }}</td>
+                <td>{{ recurso.calidad_control }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay recursos de calidad asociados.</p>
+    {% endif %}
 
-<h2>Recursos Operativos</h2>
-<ul>
-    {% for recurso in tarea.recurso_operativo.all %}
-        <li>{{ recurso.nombre }} - Equipos: {{ recurso.operativo_equipos }} - Materiales: {{ recurso.operativo_materiales }} - Herramientas: {{ recurso.operativo_herramientas }} - Mano de obra: {{ recurso.operativo_manodeobra }} - EPPs: {{ recurso.operativo_epps }} - Generales: {{ recurso.operativo_generales }}</li>
-    {% empty %}
-        <li>No hay recursos operativos asociados.</li>
-    {% endfor %}
-</ul>
-
+    <h2>Recursos Operativos</h2>
+    {% if tarea.recurso_operativo.all %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Equipos</th>
+                <th>Materiales</th>
+                <th>Herramientas</th>
+                <th>Mano de Obra</th>
+                <th>EPPs</th>
+                <th>Generales</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recurso in tarea.recurso_operativo.all %}
+            <tr>
+                <td>{{ recurso.nombre }}</td>
+                <td>{{ recurso.operativo_equipos }}</td>
+                <td>{{ recurso.operativo_materiales }}</td>
+                <td>{{ recurso.operativo_herramientas }}</td>
+                <td>{{ recurso.operativo_manodeobra }}</td>
+                <td>{{ recurso.operativo_epps }}</td>
+                <td>{{ recurso.operativo_generales }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay recursos operativos asociados.</p>
+    {% endif %}
+</div>
 {% endblock %}

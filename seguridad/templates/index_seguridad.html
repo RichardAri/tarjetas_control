@@ -1,27 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .table-custom {
+        border-collapse: collapse;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .table-custom th, .table-custom td {
+        text-align: left;
+        padding: 8px;
+    }
+    .table-custom thead {
+        background-color: #007bff;
+        color: white;
+    }
+    .table-custom tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .table-custom tbody tr:hover {
+        background-color: #ddd;
+    }
+    .table-custom th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+</style>
 
 <h1 class="mb-4 text-primary">Añadir Seguridad</h1>
-
 
 <div id="seguridad-forms">
     {% include 'partials/form_seguridad.html' %}
 </div>
 
 <div class="my-4">
-    <button type="button" class="btn btn-success me-2"
-    hx-get="{%  url 'create-seguridad' %}"
-    hx-target="#seguridad-forms"
-    hx-swap="beforeend"> Crear formulario</button> 
-    <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>  
+    <button type="button" class="btn btn-success me-2" hx-get="{% url 'create-seguridad' %}" hx-target="#seguridad-forms" hx-swap="beforeend">Crear formulario</button> 
+    <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>
 </div>
 
-<ul id="seguridad-list">
-    {% for seguridad in seguridades %}
-        {% include 'partials/seguridad.html' %}
-    {% endfor %}
-</ul>
+<table class="table-custom">
+    <thead>
+        <tr>
+            <th>Clase de Seguridad</th>
+            <th>Peligro</th>
+            <th>Riesgo</th>
+            <th>Control</th>
+        </tr>
+    </thead>
+    <tbody id="seguridad-list">
+        {% for seguridad in seguridades %}
+            {% include 'partials/seguridad.html' %}
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
-

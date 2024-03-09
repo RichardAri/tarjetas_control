@@ -3,10 +3,13 @@
 {% block title %}Listado de Tareas{% endblock %}
 
 {% block content %}
-<h1>Listado de Tareas</h1>
-<H2><a href="{% url 'crear-tarea' %}">Crear Tarea</a></H2>
-<table class="table">
-    <thead>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Listado de Tareas</h1>
+    <a href="{% url 'crear-tarea' %}" class="btn btn-success"><i class="fas fa-plus"></i> Crear Tarea</a>
+</div>
+
+<table class="table table-hover">
+    <thead class="table-dark">
         <tr>
             <th>Verbo</th>
             <th>Objeto</th>
@@ -21,10 +24,11 @@
             <td>{{ tarea.objeto }}</td>
             <td>{{ tarea.orden_de_venta }}</td>
             <td>
-                <a href="{% url 'detalle_tarea' tarea.id %}" class="btn btn-info">Ver Detalle</a>
+                <a href="{% url 'detalle_tarea' tarea.id %}" class="btn btn-primary">Ver Detalle</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% endblock %}
+    

@@ -5,6 +5,34 @@
 {% endblock %}
 
 {% block content %}
+<style>
+    .table-custom {
+        border-collapse: collapse;
+        width: 100%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    .table-custom th, .table-custom td {
+        text-align: left;
+        padding: 8px;
+    }
+    .table-custom thead {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+    .table-custom tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .table-custom tbody tr:hover {
+        background-color: #ddd;
+    }
+    .table-custom th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+</style>
+
     <!-- Aquí va el contenido específico de la página de Recursos de Calidad -->
     <h1 class="mb-4 text-primary">Añadir Recurso de calidad</h1>
 
@@ -19,10 +47,25 @@
         hx-swap="beforeend">Añadir Recurso</button>
     </div>
 
-    <ul id="recurso-list">
-        {% for recurso in recursos %}
-            {% include 'partials/recurso.html' %}
-        {% endfor %}
-    </ul>
+<!-- Suponiendo que este código esté en tu template principal donde iteras sobre recursos -->
+<div class="container mt-4">
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Peligro de Calidad</th>
+                <th>Riesgo de Calidad</th>
+                <th>Causas de Calidad</th>
+                <th>Control de Calidad</th>
+            </tr>
+        </thead>
+        <tbody id="recurso-list">
+            {% for recurso in recursos %}
+                {% include 'partials/recurso.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 
 {% endblock %}
