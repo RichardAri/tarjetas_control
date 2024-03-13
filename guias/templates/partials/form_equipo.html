@@ -1,0 +1,20 @@
+<form hx-post="{% url 'create-equipo' %}" hx-target="#equipo-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
+    <div class="row">
+        <div class="col-3 col-md-2">
+            <label for="{{ form.nombre.id_for_label }}"> {{ form.nombre.label }}</label>
+            {{ form.nombre }}
+        </div>
+        <div class="col-3 col-md-2">
+            <label for="{{ form.descripcion.id_for_label }}"> {{ form.descripcion.label }}</label>
+            {{ form.descripcion }}
+        </div>
+        <div class="col-3 col-md-2">
+            <label for="{{ form.cantidad.id_for_label }}"> {{ form.cantidad.label }}</label>
+            {{ form.cantidad }}
+        </div>
+        <div class="col-3 align-self-end">
+            <button class="btn btn-danger" type="button" hx-on="click: this.closest('form').remove()">Cancelar</button>
+        </div>
+
+    </div>
+</form>

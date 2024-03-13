@@ -64,6 +64,7 @@
             <a href="{% url 'operativos_index' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cogs"></i> Operativos</a>
             <a href="{% url 'listar_tareas' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-tasks"></i> Tareas</a>
             <a href="{% url 'listar_tarjetas_control' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Tarjeta de Control</a>
+            <a href="{% url 'listar_servicios' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i> Guia de servicio</a>
             {% if request.user.is_authenticated %}
                 <a href="{% url 'logout' %}" class="list-group-item list-group-item-action" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt" style="color: red;"></i> Logout</a>
             {% else %}

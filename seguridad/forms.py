@@ -11,3 +11,4 @@ class SeguridadForm(forms.ModelForm):
             'seguridad_riesgo': forms.TextInput(attrs={'class':'form-control'}),
             'seguridad_control': forms.TextInput(attrs={'class':'form-control'}),
         }
+

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Servicio{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1>Detalle de Servicio: {{ servicio.nombre }}</h1>
+    <p>Descripción: {{ servicio.descripcion }}</p>
+    <p>Supervisor: {{ servicio.supervisor }}</p>
+    <p>Fecha: {{ servicio.fecha }}</p>
+    <p>Costo: {{ servicio.costo }}</p>
+    <p>Estado: {{ servicio.estado }}</p>
+
+    <h2>Equipos Necesarios</h2>
+    {% if servicio.equipos_necesarios.all %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for equipo in servicio.equipos_necesarios.all %}
+            <tr>
+                <td>{{ equipo.nombre }}</td>
+                <td>{{ equipo.descripcion }}</td>
+                <td>{{ equipo.cantidad }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No se han especificado equipos necesarios para este servicio.</p>
+    {% endif %}
+</div>
+{% endblock %}
