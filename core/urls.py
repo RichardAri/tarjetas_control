@@ -30,4 +30,5 @@ urlpatterns = [
     path('tarjetas_control/', include('tarjetas_control.urls')),
     path('cuentas/', include('cuentas.urls')),
     path('guias/', include('guias.urls')),
+    path('planner/', include('planner.urls'))
 ]

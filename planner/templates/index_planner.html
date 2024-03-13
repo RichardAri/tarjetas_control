@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario 2024</title>
+    <style>
+        .month-selector {
+            margin-bottom: 20px;
+        }
+        .days-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .day {
+            width: calc(100% / 7);
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <select id="monthSelect" class="month-selector" onchange="showDays()">
+        <option value="1">Enero</option>
+        <option value="2">Febrero</option>
+        <option value="3">Marzo</option>
+        <option value="4">Abril</option>
+        <option value="5">Mayo</option>
+        <option value="6">Junio</option>
+        <option value="7">Julio</option>
+        <option value="8">Agosto</option>
+        <option value="9">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+    </select>
+
+    <div id="daysContainer" class="days-container">
+        <!-- Días se generarán aquí -->
+    </div>
+
+    <script>
+        function showDays() {
+            var monthSelect = document.getElementById("monthSelect");
+            var selectedMonth = parseInt(monthSelect.value);
+            var daysContainer = document.getElementById("daysContainer");
+            daysContainer.innerHTML = ""; // Limpiar el contenedor antes de añadir días
+
+            var daysInMonth = new Date(2024, selectedMonth, 0).getDate();
+
+            for (var i = 1; i <= daysInMonth; i++) {
+                var dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+                dayDiv.textContent = i;
+                daysContainer.appendChild(dayDiv);
+            }
+        }
+
+        // Al cargar la página, mostrar los días del mes seleccionado por defecto
+        showDays();
+    </script>
+</body>
+</html>

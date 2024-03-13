@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from guias.forms import EquipoForm, ServicioForm
@@ -45,3 +46,18 @@ def detalle_servicio(request, servicio_id):
 def listar_servicios(request):
     servicios = Servicio.objects.all()
     return render(request, 'servicios/listar_servicios.html', {'servicios': servicios})
+
+from django.http import JsonResponse
+
+def actualizar_cantidad_equipo(request, equipo_id):
+    equipo = Equipo.objects.get(pk=equipo_id)
+    nueva_cantidad = int(request.POST.get('cantidad'))
+    equipo.cantidad = nueva_cantidad
+    equipo.save()
+    return JsonResponse(equipo.cantidad, safe=False)
+
+
+def eliminar_equipo(request, equipo_id):
+    equipo = Equipo.objects.get(pk=equipo_id)
+    equipo.delete()
+    return JsonResponse({'success': True})

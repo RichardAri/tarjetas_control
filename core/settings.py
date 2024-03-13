@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'cuentas',
     'crispy_forms',
     "crispy_bootstrap5",
+    'planner',
 ]
 
 MIDDLEWARE = [
