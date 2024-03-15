@@ -1,0 +1,5 @@
+<form id="formulario-tarjeta-diaria" method="post" action="/planner/tarjetas-diarias/editar/{{ tarjeta_id }}/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
