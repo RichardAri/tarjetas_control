@@ -39,7 +39,7 @@ def editar_tarjeta_diaria(request, tarjeta_id):  # Cambio de nombre para refleja
             if "HX-Request" in request.headers:
                 return HttpResponse('Tarjeta Diaria actualizada exitosamente!', status=200)
             else:
-                return redirect('alguna_url_después_de_guardar')  # Asegúrate de reemplazar esto con una URL válida
+                return redirect('ver_tarjetas_diarias')  # Asegúrate de reemplazar esto con una URL válida
     else:
         form = TarjetaDiariaForm(instance=tarjeta_diaria)
 
