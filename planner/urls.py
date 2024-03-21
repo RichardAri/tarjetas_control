@@ -11,6 +11,8 @@ urlpatterns = [
 
     #prueba 
     path('tarjetas-diarias/editar/<int:tarjeta_id>/', views.editar_tarjeta_diaria, name='editar_tarjeta_diaria'),
+    # prueva de hoover
+
 
 
 ]

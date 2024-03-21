@@ -6,49 +6,82 @@
     <title>Tarjetas Diarias</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
         .calendario {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            padding: 20px;
         }
         .dia {
-            border: 1px solid #ccc;
-            padding: 10px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .modal-dialog {
-            max-width: 400px;
+        .dia:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .calendario {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Bienvenido, {{ user.username }}</h1>
+    <div class="container">
+        <h1 class="text-center mb-4">Bienvenido, {{ user.username }}</h1>
 
-    <div class="calendario">
-        {% for tarjeta in tarjetas_diarias %}
-            <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
-                {{ tarjeta.fecha.day }}
-            </div>
-        {% endfor %}
+        <div class="calendario">
+            {% for tarjeta in tarjetas_diarias %}
+                <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
+                    {{ tarjeta.fecha.day }}
+                    <ul>
+                        {% for tarea in tarjeta.get_tareas %} <!-- Asumiendo get_tareas es un método o propiedad que devuelve las tareas para la tarjeta -->
+                            <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div>
+            {% for tarjeta in tarjetas_diarias %}
+    <div class="dia">
+        <!-- Mostrar detalles de la tarjeta diaria -->
+        {{ tarjeta.fecha.day }}
+        <ul>
+            {% for tarea in tarjeta.tareas.all %}
+                <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
+            {% endfor %}
+        </ul>
     </div>
+{% endfor %}
 
-    <!-- El botón para crear una nueva Tarjeta Diaria ha sido eliminado -->
-
-    <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar Tareas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="modalBody">
-                    <!-- El formulario se cargará aquí dinámicamente -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+        <!-- Modal Bootstrap para Tarjetas Diarias -->
+        <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Agregar Tareas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <!-- Contenido dinámico se cargará aquí -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,4 +92,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/htmx.org"></script>
 </body>
+
 </html>

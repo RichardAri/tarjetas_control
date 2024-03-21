@@ -5,6 +5,8 @@ from .models import TarjetaDiaria
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import TarjetaDiariaForm
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.utils import timezone
 
 
 
@@ -13,15 +15,18 @@ def index_planner(request):
     return render(request, 'index_planner.html')
 
 def ver_tarjetas_diarias(request):
-    # Obtener el usuario autenticado
     usuario = request.user
 
-    # Filtrar las tarjetas diarias por el usuario autenticado
-    tarjetas_diarias = TarjetaDiaria.objects.filter(usuario__user=usuario)
-
-    # Pasar los datos a la plantilla
-    return render(request, 'ver_tarjetas_diarias.html', {'tarjetas_diarias': tarjetas_diarias})
-
+    # Filtrar las tarjetas diarias por el usuario autenticado y por el mes actual
+    hoy = timezone.now()
+    tarjetas_diarias = TarjetaDiaria.objects.filter(
+        usuario__user=usuario, 
+        fecha__year=hoy.year, 
+        fecha__month=hoy.month
+    )
+    return render(request, 'ver_tarjetas_diarias.html', {
+        'tarjetas_diarias': tarjetas_diarias,  # Pasa las tareas como parte del contexto si es aplicable
+    })
 
 def lista_tareas(request):
     tareas = Tarea.objects.all()  # Asume que ya tienes un modelo Tarea
