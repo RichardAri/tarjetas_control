@@ -1,6 +1,10 @@
-from django.shortcuts import render
+
+
+
+
+
+
 from django.http import HttpResponse
 
-def index(request):
-    # Aquí puedes colocar cualquier lógica adicional que necesites
-    return HttpResponse("¡Bienvenido modelos!")
+def vista_simple(request):
+    return HttpResponse("Hola, esta es una respuesta simple desde modelos.")

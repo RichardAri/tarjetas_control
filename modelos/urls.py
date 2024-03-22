@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import vista_simple
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    # Puedes agregar más rutas aquí
+    path('simple/', vista_simple, name='vista_simple'),
 ]
+
+

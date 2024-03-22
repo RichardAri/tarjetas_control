@@ -8,13 +8,27 @@
     <style>
         body {
             background-color: #f8f9fa;
-            padding-top: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        .contenedor-principal {
+            display: flex;
+            flex-wrap: nowrap;
         }
         .calendario {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el ancho mínimo de las tarjetas */
             gap: 15px;
             padding: 20px;
+            margin: 0;
+        }
+
+        .lista-tareas {
+            flex-basis: 500px;
+            padding: 20px;
+            overflow-y: auto;
+            height: 90vh;
         }
         .dia {
             background-color: #ffffff;
@@ -29,45 +43,46 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         @media (max-width: 768px) {
-            .calendario {
-                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            .contenedor-principal {
+                flex-direction: column;
+            }
+            .calendario, .lista-tareas {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid p-0">
         <h1 class="text-center mb-4">Bienvenido, {{ user.username }}</h1>
 
-        <div class="calendario">
-            {% for tarjeta in tarjetas_diarias %}
-                <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
-                    {{ tarjeta.fecha.day }}
-                    <ul>
-                        {% for tarea in tarjeta.get_tareas %} <!-- Asumiendo get_tareas es un método o propiedad que devuelve las tareas para la tarjeta -->
-                            <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endfor %}
+        <div class="contenedor-principal">
+            <div class="calendario">
+                {% for tarjeta in tarjetas_diarias %}
+                    <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
+                        {{ tarjeta.fecha.day }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="lista-tareas">
+                <h2>Tareas del día</h2>
+                {% for tarjeta in tarjetas_diarias %}
+                    <div>
+                        {{ tarjeta.fecha.day }}
+                        <ul>
+                            {% for tarea in tarjeta.tareas.all %}
+                                <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
 
-        <div>
-            {% for tarjeta in tarjetas_diarias %}
-    <div class="dia">
-        <!-- Mostrar detalles de la tarjeta diaria -->
-        {{ tarjeta.fecha.day }}
-        <ul>
-            {% for tarea in tarjeta.tareas.all %}
-                <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endfor %}
-
-        </div>
         <!-- Modal Bootstrap para Tarjetas Diarias -->
-        <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <!-- Modal Bootstrap para Tarjetas Diarias -->
+         <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -85,12 +100,13 @@
                 </div>
             </div>
         </div>
+        <!-- Modal Content -->
     </div>
 
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/htmx.org"></script>
 </body>
-
 </html>

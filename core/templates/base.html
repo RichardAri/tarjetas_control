@@ -58,9 +58,15 @@
 <div class="d-flex" id="wrapper">
     <!-- Barra lateral -->
     <div class="bg-light border-end" id="sidebar-wrapper">
-        <div class="sidebar-heading">Tarjetas de Control</div>
+        <div class="sidebar-heading">Tarjetas Control</div>
         <div class="list-group list-group-flush">
             <a href="{% url 'home' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-home"></i> Home</a>
+            <a href="{% url 'nombre_de_mi_vista' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-circle"></i> Procesos</a>
+            <a href="{% url 'nombre_de_mi_vista' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-circle"></i> Subprocesos</a>
+            <a href="{% url 'ver_tarjetas_diarias' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i>Planner</a>
+
+
+            
             <a href="{% url 'calidad_index' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-check-circle"></i> Calidad</a>
             <a href="{% url 'seguridad_index' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-shield-alt"></i> Seguridad</a>
             <a href="{% url 'operativos_index' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-cogs"></i> Operativos</a>
@@ -76,7 +82,7 @@
         <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
             {% csrf_token %}
             </form>
-            <a href="{% url 'ver_tarjetas_diarias' %}" class="list-group-item list-group-item-action bg-light"><i class="fas fa-clipboard-list"></i>Planner AQUI ES LA VERISON FINAL</a>
+           
     </div>
 
     <!-- Contenido principal -->

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from core import settings
+from procesos.models import Subproceso
 
 class RecursoSeguridad(models.Model):
     clase_seguridad = models.CharField(max_length=100, blank=True, null=True)
@@ -46,6 +47,7 @@ class RecursoOperativo(models.Model):
         return " | ".join(campos)
 
 class Tarea(models.Model):
+    subproceso = models.ForeignKey(Subproceso, on_delete=models.CASCADE, null=True)
     verbo = models.CharField(max_length=100)
     objeto = models.CharField(max_length=100)
     orden_de_venta = models.CharField(max_length=100, null=True, blank=True)
