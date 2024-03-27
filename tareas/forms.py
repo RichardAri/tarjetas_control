@@ -23,4 +23,4 @@ class TareaForm(forms.ModelForm):
 
     class Meta:
         model = Tarea
-        fields = ['verbo', 'objeto', 'orden_de_venta', 'recurso_seguridad', 'recurso_calidad', 'recurso_operativo']
+        fields = ['subproceso', 'verbo', 'objeto', 'unidad_de_medida', 'tiempo_tarea', 'recurso_seguridad', 'recurso_calidad', 'recurso_operativo']

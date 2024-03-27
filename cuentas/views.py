@@ -36,10 +36,10 @@ def user_login(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=username, password=password)      
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Redirige a la página principal después del login exitoso
+                return redirect('ver_tarjetas_diarias')  # Redirige a la página principal después del login exitoso
             else:
                 return HttpResponse("Credenciales inválidas.")
     else:

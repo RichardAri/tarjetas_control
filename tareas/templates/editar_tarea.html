@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Tarea</title>
+</head>
+<body>
+    <h1>Editar Tarea</h1>
+    <form id="editarTareaForm" hx-post="{% url 'editar-tarea' tarea_id %}" hx-target="#editarTareaForm">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Guardar cambios</button>
+    </form>
+    <a href="{% url 'listar_tareas' %}">Volver a la lista de tareas</a>
+
+    <!-- Scripts de HTMX -->
+    <script src="https://unpkg.com/hyperscript.org@0.9.5"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</body>
+</html>

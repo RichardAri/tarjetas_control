@@ -1,0 +1,38 @@
+<!-- Después de cerrar tu div #wrapper -->
+<div class="boton-reportar-bug">
+    <a href="{% url 'reportar-bug' %}" class="icono-reportar-bug">
+        <i class="fas fa-bug"></i>
+    </a>
+</div>
+<style>
+            @keyframes parpadeo {
+            0%   { transform: scale(1); color: violet; }
+            50%  { transform: scale(1.2); color: orange; }
+            100% { transform: scale(1); color: blue; }
+        }
+
+        .icono-reportar-bug {
+            font-size: 3em; /* Ajusta el tamaño del ícono */
+            color: violet; /* Color del ícono */
+            animation: parpadeo 2s infinite; /* Aplica la animación */
+        }
+
+        .icono-reportar-bug:hover {
+            color: darkred; /* Cambio de color al pasar el ratón */
+        }
+</style>
+
+
+en sstigns:
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'iadso.ao@gmail.com'  # Tu dirección de Gmail
+EMAIL_HOST_PASSWORD = 'qyojiuehggdlclzd'   # Tu contraseña de Gmail o clave de app
+
+y tenia que installar algo creo que era:
+
+
+pip install Pillow

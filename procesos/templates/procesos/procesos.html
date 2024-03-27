@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+    .align-center {
+        display: flex;
+        align-items: center; /* O intenta con flex-start si center no funciona como esperas */
+        gap: 10px;
+    }
+    
+    /* Ajuste fino de la alineación del botón si es necesario */
+    .align-center button {
+        margin-bottom: -16px; /* Ajusta este valor según sea necesario */
+    }
+    .form-row .col-md-6 {
+    display: inline-block; /* O prueba con flex si estás usando un sistema basado en Flexbox */
+    width: 50%; /* Asegura que cada columna ocupe la mitad del espacio disponible */
+}
+.lista-procesos {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.proceso {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.subproceso {
+    background-color: #6cb2eb;
+    color: white;
+    padding: 15px;
+    margin: 5px 0;
+}
+
+.tarea {
+    background-color: #b8daff;
+    color: black;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+h1, h2, p {
+    margin: 0;
+}
+
+/* Ajustes visuales adicionales */
+.lista-procesos > div, .subprocesos > div {
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.tareas > div {
+    margin-left: 20px;
+    border-radius: 5px;
+}
+
+
+    </style>
+    
+<div class="container mt-5">
+    <h2 class="mb-4">Gestión de Procesos</h2>
+    <div style="display: flex; justify-content: space-between;">
+        <div class="form-container" style="width: 49%;">
+                       <!-- Crear Proceso -->
+                       <div class="form-section">
+                        <form method="post" class="align-center">
+                            {% csrf_token %}
+                            <div style="flex-grow: 1;">
+                                {{ proceso_form.nombre|as_crispy_field }}
+                            </div>
+                            <button type="submit" name="submit_proceso" class="btn btn-primary">Guardar Proceso</button>
+                        </form>
+                    </div>
+        
+                    <!-- Crear Subproceso -->
+                    <div class="form-section mt-4">
+                        <form method="post" class="align-center">
+                            {% csrf_token %}
+                            <div style="flex-grow: 1;">
+                                {{ subproceso_form.proceso|as_crispy_field }}
+                            </div>
+                            <div style="flex-grow: 1;">
+                                {{ subproceso_form.nombre|as_crispy_field }}
+                            </div>
+                            <button type="submit" name="submit_subproceso" class="btn btn-secondary">Guardar Subproceso</button>
+                        </form>
+                    </div>
+                    <h3>Asignar Tarea</h3>
+<form method="post" class="form">
+    {% csrf_token %}
+    <div class="align-center flex-wrap" style="gap: 10px;"> <!-- Asegurarse de que los campos se puedan envolver -->
+        <!-- Primer par de campos -->
+        <div style="display: flex; gap: 10px; width: 100%;">
+            <div style="flex: 1;">{{ tarea_form.subproceso|as_crispy_field }}</div>
+            <div style="flex: 1;">{{ tarea_form.verbo|as_crispy_field }}</div>
+        </div>
+        <!-- Segundo par de campos -->
+        <div style="display: flex; gap: 10px; width: 100%;">
+            <div style="flex: 1;">{{ tarea_form.objeto|as_crispy_field }}</div>
+            <div style="flex: 1;">{{ tarea_form.unidad_de_medida|as_crispy_field }}</div>
+        </div>
+        <!-- Campo restante -->
+        <div style="flex: 0 0 100%;">{{ tarea_form.tiempo_tarea|as_crispy_field }}</div>
+    </div>
+    <button type="submit" name="submit_tarea" class="btn btn-success mt-3">Guardar Tarea</button>
+</form>
+
+            <!-- Asignar Tarea - Ajustado como antes -->
+        </div>
+        
+        <div class="lista-procesos">
+            {% for proceso in procesos %}
+                <div class="proceso">
+                    <h1>{{ proceso.nombre }}</h1>
+                    <div class="subprocesos">
+                        {% for subproceso in proceso.subprocesos.all %}
+                            <div class="subproceso">
+                                <h2>{{ subproceso.nombre }}</h2>
+                                <div class="tareas">
+                                    {% for tarea in subproceso.tarea_set.all %}
+                                        <div class="tarea">
+                                            <p>Tarea: {{ tarea.verbo }} {{ tarea.objeto }}</p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+</div>
+<script>
+    // Esperar a que el DOM esté listo
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener los formularios por su clase o id
+        var formProceso = document.querySelector("form.proceso-form");
+        var formSubproceso = document.querySelector("form.subproceso-form");
+        var formTarea = document.querySelector("form.tarea-form");
+        
+        // Función para resetear el formulario
+        function resetForm(form) {
+            form.addEventListener("submit", function() {
+                setTimeout(function() { form.reset(); }, 1000); // Retardo para asegurar el envío antes de resetear
+            });
+        }
+        
+        // Aplicar a cada formulario
+        if (formProceso) resetForm(formProceso);
+        if (formSubproceso) resetForm(formSubproceso);
+        if (formTarea) resetForm(formTarea);
+    });
+    </script>
+    
+{% endblock %}
+

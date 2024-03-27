@@ -1,112 +1,247 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjetas Diarias</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-        }
-        .contenedor-principal {
-            display: flex;
-            flex-wrap: nowrap;
-        }
-        .calendario {
-            flex: 1;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el ancho mínimo de las tarjetas */
-            gap: 15px;
-            padding: 20px;
-            margin: 0;
-        }
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tarjetas Diarias</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+                    * {
+                box-sizing: border-box;
+            }
 
-        .lista-tareas {
-            flex-basis: 500px;
-            padding: 20px;
-            overflow-y: auto;
-            height: 90vh;
-        }
-        .dia {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .dia:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        @media (max-width: 768px) {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Asegúrate de que ningún elemento tenga un ancho que exceda 100% del viewport */
+            .elemento {
+                max-width: 100%;
+                overflow-x: hidden; /* Esconde el contenido que se desborde horizontalmente */
+            }
+            body, .contenedor-principal {
+                overflow-x: hidden;
+            }
+            body { /* Color de fondo más suave para las tarjetas del calendario */
+                border: 1px solid #e1e1e1; /* Color de borde más suave */
+                margin: 0; /* Asegúrate de que no haya margen */
+                padding: 0; /* Asegúrate de que no haya padding */
+                padding-top: 20px; /* Mantenemos el padding superior para algo de espacio en la parte superior */
+                background-color: #FFDEE9;
+                background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+                padding: 10px;
+            }
             .contenedor-principal {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            .calendario {
+                flex: 1;
+                display: grid;
+                grid-template-columns: repeat(7, 1fr); /* 7 columnas */
+                gap: 15px;
+                padding: 20px;
+                margin: 0;
+                align-items: start; /* Alinea los elementos al inicio */
+            }
+
+            .lista-tareas {
+                flex-basis: 500px;
+                padding: 20px;
+                overflow-y: auto;
+                height: 90vh;
+                background-color: #fffde7; /* Amarillo pastel suave */
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                }
+            .dia {
+                background-color: #b2dfdb; /* Color de fondo más suave para las tarjetas del calendario */
+                border: 1px solid #e1e1e1; /* Color de borde más suave */
+                text-align: center;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+                border-radius: 10px;
+                display: flex;
                 flex-direction: column;
+                justify-content: space-between; 
+                padding: 0.5px;
+                min-height: 1vh; /* Altura mínima relativa al tamaño de la pantalla */
             }
-            .calendario, .lista-tareas {
+            .dia:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            @media (max-width: 768px) {
+                .contenedor-principal {
+                    flex-direction: column;
+                }
+                .calendario, .lista-tareas {
+                    padding: 15px;
+                }
+                .dia {
+                    padding: 5px;
+                    min-height: 10vh;
+                }
+
+            }
+            
+            /* Estilos para mejorar la lista de tareas */
+            .lista-tareas {
+                flex-basis: 500px;
+                padding: 20px;
+                overflow-y: auto;
+                height: 90vh;
+                margin: 0;
+            }
+            .tarea {
+                background-color: #fff9c4; /* Color de fondo más suave para las tareas */
+                border: 1px solid #e1e1e1; /* Color de borde más suave */
+                margin-bottom: 10px;
                 padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container-fluid p-0">
-        <h1 class="text-center mb-4">Bienvenido, {{ user.username }}</h1>
+            .tarea h3 {
+                margin-top: 0;
+                color: #333;
+                font-weight: normal;
+            }
+            .tarea ul {
+                padding-left: 20px;
+                margin: 10px 0;
+            }
+            .tarea li {
+                line-height: 1.6;
+            }
+            .tarea-header {
+                border-bottom: 1px solid #eee;
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+                font-size: 1.2em;
+            }
+            .badge {
+                background-color: black; /* Azul claro */
+            }
+            .fecha-tarjeta {
+                font-size: 0.9em; /* Tamaño más grande para la fecha */
+            }
 
-        <div class="contenedor-principal">
-            <div class="calendario">
-                {% for tarjeta in tarjetas_diarias %}
-                    <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
-                        {{ tarjeta.fecha.day }}
-                    </div>
-                {% endfor %}
-            </div>
+            .total-minutos {
+                font-size: 3.75em; /* Tamaño de fuente muy grande */
+                font-weight: bold; /* Fuente en negrita */
+                margin-bottom: 0.5em; /* Hace que el texto sea más grueso */
+            }
+            .dia-encabezado {
+                font-weight: bold;  /* Texto en negrita */
+                text-align: center; /* Centrar el texto */
+                padding: 0px;      /* Padding para espacio interno */
+                /* Otros estilos que necesites */
+            }
+            .dia-vacio {
+                /* Mismo tamaño que los días, pero sin contenido */
+                min-height: 1vh; /* Ajusta según sea necesario */
+            }
 
-            <div class="lista-tareas">
-                <h2>Tareas del día</h2>
-                {% for tarjeta in tarjetas_diarias %}
-                    <div>
-                        {{ tarjeta.fecha.day }}
-                        <ul>
-                            {% for tarea in tarjeta.tareas.all %}
-                                <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
 
-        <!-- Modal Bootstrap para Tarjetas Diarias -->
-         <!-- Modal Bootstrap para Tarjetas Diarias -->
-         <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Agregar Tareas</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body" id="modalBody">
-                        <!-- Contenido dinámico se cargará aquí -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid p-0 m-0">
+            <div class="row align-items-center">
+                <!-- Columna para el mensaje de bienvenida -->
+                <div class="col-md-6 text-left px-4">
+                    <h1>Bienvenido, {{ user.username }}</h1>
+                </div>
+
+                <!-- Columna para la fecha y botones -->
+                <div class="col-md-6 text-right px-4">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <!-- Badge con la fecha -->
+                        <h2><span class="badge bg-secondary fs-6 text-white">{{ dia_actual }} de {{ nombre_mes_actual }}</span></h2>
+
+                        <!-- Botones, ahora dentro del div con display flex -->
+                        <a href="{% url 'home' %}" class="btn btn-primary ml-2">Home</a>
+                        <a href="javascript:document.getElementById('logout-form').submit()" class="btn btn-secondary ml-2">Logout</a>
+
+                        <!-- Formulario de Logout -->
+                        <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
+                            {% csrf_token %}
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Modal Content -->
-    </div>
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/htmx.org"></script>
-</body>
-</html>
+            
+            <div class="contenedor-principal">
+                <div class="calendario">
+                    <div class="dia-encabezado">Lunes</div>
+                    <div class="dia-encabezado">Martes</div>
+                    <div class="dia-encabezado">Miércoles</div>
+                    <div class="dia-encabezado">Jueves</div>
+                    <div class="dia-encabezado">Viernes</div>
+                    <div class="dia-encabezado">Sábado</div>
+                    <div class="dia-encabezado">Domingo</div>
+                    {% for _ in espacios_vacios %}
+                        <div class="dia-vacio"></div>
+                    {% endfor %}
+                    {% for tarjeta in tarjetas_diarias %}
+                        <div class="dia" hx-get="/planner/tarjetas-diarias/editar/{{ tarjeta.id }}/" hx-target="#modalBody" hx-trigger="click" data-toggle="modal" data-target="#formularioModal">
+                            <div class="fecha-tarjeta">
+                                {{ tarjeta.fecha.day }}
+                            </div>
+                            <div class="total-minutos">
+                                <span class="badge badge-info ml-2">{{ tarjeta.horas_y_minutos }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="lista-tareas">
+                    <h2>Tareas del día</h2>
+                    {% for tarjeta in tarjetas_diarias %}
+                        <div class="tarea">
+                            <div class="tarea-header">
+                                {{ tarjeta.fecha.day }}
+                            </div>
+                            <ul>
+                                {% for tarea in tarjeta.tareas.all %}
+                                    <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+
+            <!-- Modal Bootstrap para Tarjetas Diarias -->
+            <!-- Modal Bootstrap para Tarjetas Diarias -->
+            <div class="modal fade" id="formularioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar Tareas</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modalBody">
+                            <!-- Contenido dinámico se cargará aquí -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Content -->
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/htmx.org"></script>
+    </body>
+    </html>

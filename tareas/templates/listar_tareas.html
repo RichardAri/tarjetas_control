@@ -25,6 +25,8 @@
             <td>{{ tarea.orden_de_venta }}</td>
             <td>
                 <a href="{% url 'detalle_tarea' tarea.id %}" class="btn btn-primary">Ver Detalle</a>
+                <a href="{% url 'editar-tarea' tarea.id %}" class="btn btn-primary">Editar Tarjeta</a>
+                <a href="{% url 'editar_tarea_nuevo' tarea.id %}" class="btn btn-primary">Editar Tarea</a>
             </td>
         </tr>
         {% endfor %}

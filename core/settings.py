@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -35,7 +36,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'planner',
-    'procesos'
+    'procesos',
+    'bugs',
 ]
 
 MIDDLEWARE = [
@@ -126,8 +128,18 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-LOGIN_URL = 'login'
+LOGIN_URL = '/cuentas/login/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'iadso.ao@gmail.com'  # Tu dirección de Gmail
+EMAIL_HOST_PASSWORD = 'qyojiuehggdlclzd'   # Tu contraseña de Gmail o clave de app

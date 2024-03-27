@@ -14,19 +14,35 @@ from django.utils import timezone
 def index_planner(request):
     return render(request, 'index_planner.html')
 
+from django.utils import timezone
+import calendar
+
 def ver_tarjetas_diarias(request):
     usuario = request.user
-
-    # Filtrar las tarjetas diarias por el usuario autenticado y por el mes actual
     hoy = timezone.now()
+
+    # Obtener el día y el nombre del mes actual
+    dia_actual = hoy.day
+    nombre_mes_actual = calendar.month_name[hoy.month]
+
+    # Calcula el primer día del mes y su día de la semana (0 es lunes, 6 es domingo)
+    primer_dia_mes = hoy.replace(day=1)
+    dia_semana_primer_dia = primer_dia_mes.weekday()
+    espacios_vacios = [''] * dia_semana_primer_dia
+
     tarjetas_diarias = TarjetaDiaria.objects.filter(
         usuario__user=usuario, 
         fecha__year=hoy.year, 
         fecha__month=hoy.month
     )
+
     return render(request, 'ver_tarjetas_diarias.html', {
-        'tarjetas_diarias': tarjetas_diarias,  # Pasa las tareas como parte del contexto si es aplicable
+        'tarjetas_diarias': tarjetas_diarias,
+        'dia_actual': dia_actual,
+        'nombre_mes_actual': nombre_mes_actual,
+        'espacios_vacios': espacios_vacios,
     })
+
 
 def lista_tareas(request):
     tareas = Tarea.objects.all()  # Asume que ya tienes un modelo Tarea
