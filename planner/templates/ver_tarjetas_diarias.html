@@ -201,9 +201,12 @@
                     <h2>Tareas del día</h2>
                     {% for tarjeta in tarjetas_diarias %}
                         <div class="tarea">
-                            <div class="tarea-header">
-                                {{ tarjeta.fecha.day }}
-                            </div>
+                            <!-- Agrega un enlace aquí -->
+                            <a href="{% url 'tarjeta-diaria-detail' id=tarjeta.id %}">
+                                <div class="tarea-header">
+                                    {{ tarjeta.fecha.day }}
+                                </div>
+                            </a>
                             <ul>
                                 {% for tarea in tarjeta.tareas.all %}
                                     <li>{{ tarea.verbo }} {{ tarea.objeto }}</li>

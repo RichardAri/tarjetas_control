@@ -4,6 +4,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from datetime import datetime
 import calendar
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
 
 class UserProfile(models.Model):
     ROLES = (
@@ -16,22 +18,24 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
 @receiver(post_save, sender=UserProfile)
-def crear_tarjetas_diarias(sender, instance, created, **kwargs):
-    from planner.models import TarjetaDiaria  # Movemos la importación aquí
-    if created:  # Solo ejecutar si se crea un nuevo usuario
+
+def crear_tarjetas_anuales(sender, instance, created, **kwargs):
+    from planner.models import TarjetaDiaria
+    if created:
         usuario = instance
-        fecha_hoy = datetime.now()
-        numero_dias_mes = calendar.monthrange(fecha_hoy.year, fecha_hoy.month)[1]
-        for dia in range(1, numero_dias_mes + 1):
-            fecha = datetime(fecha_hoy.year, fecha_hoy.month, dia).date()
-            TarjetaDiaria.objects.create(usuario=usuario, fecha=fecha)
+        hoy = datetime.now().date()
+        
+        # Establecer el inicio en el primer día del mes actual
+        fecha_inicio = hoy.replace(day=1)
 
-        # Si deseas eliminar las tarjetas de días anteriores descomenta la siguiente línea
-        # eliminar_tarjetas_anteriores(usuario)
+        # La fecha de finalización sigue siendo un año después
+        fecha_fin = fecha_inicio + relativedelta(years=1)
 
-def eliminar_tarjetas_anteriores(usuario):
-    from planner.models import TarjetaDiaria  # También movemos la importación aquí
-    fecha_hoy = datetime.now()
-    TarjetaDiaria.objects.filter(usuario=usuario, fecha__lt=datetime(fecha_hoy.year, fecha_hoy.month, 1)).delete()
+        # Crear tarjetas diarias desde el principio del mes
+        fecha_actual = fecha_inicio
+        while fecha_actual < fecha_fin:
+            TarjetaDiaria.objects.get_or_create(usuario=usuario, fecha=fecha_actual)
+            fecha_actual += timedelta(days=1)
+
+

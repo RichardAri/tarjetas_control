@@ -1,0 +1,109 @@
+<!-- tarjeta_diaria_detail.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Título de Mi Nueva Página{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        color: #333;
+        background-color: #f8f8f8;
+        font-size: 16px; /* Aumenta el tamaño de la fuente */
+    }
+
+    h2 {
+        color: #4a4a4a;
+        font-size: 24px; /* Tamaño de fuente más grande para los títulos */
+        font-weight: bold; /* Texto más grueso para títulos */
+    }
+
+    p {
+        font-size: 18px; /* Tamaño de fuente más grande para párrafos */
+        margin-bottom: 10px; /* Espaciado adicional después de cada párrafo */
+    }
+
+    .sortable div {
+        border: 1px solid #ddd;
+        background-color: #fff;
+        padding: 15px; /* Acolchado más grande para cada tarea */
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 18px; /* Tamaño de fuente más grande para tareas */
+    }
+
+    .sortable div:hover {
+        background-color: #e9e9e9;
+    }
+
+    .htmx-indicator {
+        display: none; /* Oculta por defecto */
+        font-size: 18px; /* Tamaño de fuente para el indicador */
+    }
+
+    .htmx-request .htmx-indicator {
+        display: block; /* Muestra al realizar la petición */
+        color: blue;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+<h2>Detalle de Tarjeta Diaria</h2>
+<p>Usuario: {{ tarjeta.usuario.user.username }}</p>
+<p>Fecha: {{ tarjeta.fecha }}</p>
+<p>Duración Jornada: {{ tarjeta.duracion_jornada }} horas</p>
+<p>Total Minutos: {{ tarjeta.total_minutos }}</p>
+<p>Horas y Minutos: {{ tarjeta.horas_y_minutos }}</p>
+<form class="sortable" hx-post="/ruta_para_ordenar_tareas" hx-trigger="end">
+    <div class="htmx-indicator">Updating...</div>
+    {% for tarea in tarjeta.tareas.all %}
+        <div>
+            <input type='hidden' name='item' value='{{ tarea.id }}'/>
+            {{ tarea.verbo }} - {{ tarea.objeto }} - 
+            {% if tarea.tiempo_tarea %}{{ tarea.tiempo_tarea }} minutos{% else %}Tiempo no especificado{% endif %} - 
+            Subprocesos: {{ tarea.subproceso.all|join:", " }} - 
+            Recursos Totales: 
+            {{ tarea.recurso_seguridad.all|join:", " }},
+            {{ tarea.recurso_calidad.all|join:", " }},
+            {{ tarea.recurso_operativo.all|join:", " }}
+        </div>
+    {% endfor %}
+</form>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Aquí puedes incluir JavaScript adicional específico para esta página -->
+<script>
+    htmx.onLoad(function(content) {
+    var sortables = content.querySelectorAll(".sortable");
+    for (var i = 0; i < sortables.length; i++) {
+      var sortable = sortables[i];
+      var sortableInstance = new Sortable(sortable, {
+          animation: 150,
+          ghostClass: 'blue-background-class',
+
+          // Make the `.htmx-indicator` unsortable
+          filter: ".htmx-indicator",
+          onMove: function (evt) {
+            return evt.related.className.indexOf('htmx-indicator') === -1;
+          },
+
+          // Disable sorting on the `end` event
+          onEnd: function (evt) {
+            //this.option("disabled", true);
+          }
+      });
+
+      // Re-enable sorting on the `htmx:afterSwap` event
+      sortable.addEventListener("htmx:afterSwap", function() {
+        sortableInstance.option("disabled", false);
+      });
+    }
+})
+</script>
+{% endblock %}

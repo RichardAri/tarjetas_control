@@ -7,15 +7,13 @@ from .forms import TarjetaDiariaForm
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.utils import timezone
-
+import calendar
 
 
 # Create your views here.
 def index_planner(request):
     return render(request, 'index_planner.html')
 
-from django.utils import timezone
-import calendar
 
 def ver_tarjetas_diarias(request):
     usuario = request.user
@@ -47,6 +45,20 @@ def ver_tarjetas_diarias(request):
 def lista_tareas(request):
     tareas = Tarea.objects.all()  # Asume que ya tienes un modelo Tarea
     return render(request, 'lista_tareas.html', {'tareas': tareas})
+
+
+# para ver una tarjeta sola y sus atributos correspondientes
+def tarjeta_diaria_detail(request, id):
+    tarjeta = get_object_or_404(TarjetaDiaria, pk=id)
+    return render(request, 'tarjetadiaria/tarjeta_diaria_detail.html', {'tarjeta': tarjeta})
+
+
+def tareas_por_tarjeta(request, tarjeta_id):
+    tarjeta = TarjetaDiaria.objects.get(id=tarjeta_id)
+    tareas = tarjeta.tareas.all()  # Obtiene todas las tareas asociadas a la tarjeta
+    return render(request, 'tareas_por_fecha.html', {'tareas': tareas})
+
+
 
 
 @login_required
@@ -89,7 +101,7 @@ def crear_o_editar_tarjeta_diaria(request):
                     return HttpResponse('UserProfile no existe para este usuario.', status=400)
                 tarjeta_diaria.usuario = user_profile
             tarjeta_diaria.save()
-            form.save_m2m()  # Necesario para guardar las relaciones ManyToMany
+            form.save_m2m()  # Necesario para guardar las relaciones ManyToMany 
             
             if "HX-Request" in request.headers:
                 return HttpResponse('Tarjeta Diaria guardada exitosamente!', status=200)

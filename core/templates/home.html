@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home - Guía Rápida
+
+{% endblock %}
+
+{% block content %}
+<style>
+    .page-header h1, .page-header p {
+        text-align: center;
+    }
+
+    .flow-wrapper {
+        background: linear-gradient(to bottom right, #e6f7ff, #b3e5fc);
+        padding: 50px;
+        border-radius: 25px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        position: relative;
+        min-height: 700px; /* Ajuste de altura */
+        width: 85%; /* Ajuste de ancho */
+        margin: 0 auto; /* Centrado */
+    }
+
+    .flow-item {
+        position: absolute;
+        text-align: center;
+        width: 220px; /* Ajuste de ancho de las tarjetas */
+        transition: transform 0.3s ease;
+        border-radius: 15px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        margin: 15px; /* Espacio entre tarjetas */
+    }
+
+    .flow-item i {
+        font-size: 2.5em;
+        color: #6f42c1;
+    }
+
+    .flow-item h3 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .flow-item p {
+        color: #555;
+    }
+
+    #item-arbol {
+        top: 10%;
+        left: 5%;
+        transform: rotate(-10deg);
+    }
+
+    #item-gestor {
+        top: 20%;
+        left: 20%;
+        transform: rotate(5deg);
+    }
+
+    #item-recursos {
+        top: 30%;
+        left: 35%;
+        transform: rotate(-5deg);
+    }
+
+    #item-tareas {
+        top: 40%;
+        left: 50%;
+        transform: rotate(10deg);
+    }
+
+    #item-tarjeta-control {
+        top: 50%;
+        left: 65%;
+        transform: rotate(-15deg);
+    }
+
+    .flow-item:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    }
+    .fade-in {
+        animation: fadeInAnimation ease 0.5s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+    }
+
+    /* Keyframes para la animación de aparición */
+    @keyframes fadeInAnimation {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+</style>
+
+
+<!-- Encabezado de la Página -->
+<div class="page-header">
+    <h1>Bienvenido al Sistema de Tarjetas de Control</h1>
+    <p>Una guía visual rápida para ayudarte a navegar por el sistema.</p>
+</div>
+
+<!-- Contenido Principal - Diseño Tipo Flujo -->
+<div class="flow-wrapper">
+    <div class="flow-item" id="item-arbol">
+        <i class="fas fa-project-diagram fa-3x"></i>
+        <h3>Árbol</h3>
+        <p>PAra crear un proceso general y luego...</p>
+    </div>
+
+    <div class="flow-item" id="item-gestor" style="display: none;">
+        <i class="fas fa-tasks fa-3x"></i>
+        <h3>Gestor</h3>
+        <p>Puedes revisar, crear o editar tus procesos, subprocesos y tareas, ademas...</p>
+    </div>
+
+    <div class="flow-item" id="item-recursos" style="display: none;">
+        <i class="fas fa-boxes fa-3x"></i>
+        <h3>Recursos</h3>
+        <p>Puedes añadir tus recursos de calidad, seguridad y operativos para luego...</p>
+    </div>
+
+    <!-- Agrega más secciones según sea necesario -->
+    <!-- Ejemplo: Tareas -->
+    <div class="flow-item" id="item-tareas" style="display: none;">
+        <i class="fas fa-clipboard-list fa-3x"></i>
+        <h3>Tareas</h3>
+        <p>Gestiona tus tareas pendientes y en proceso.</p>
+    </div>
+
+    <!-- Ejemplo: Tarjeta de Control -->
+    <div class="flow-item" id="item-tarjeta-control" style="display: none;">
+        <i class="fas fa-calendar-alt"></i>
+        <h3>Planner</h3>
+        <p>Y finalmente puedes controlar todo tu mes de tareas </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Función para mostrar el siguiente elemento
+    function showNextItemWithAnimation(currentItemId, nextItemId) {
+        document.getElementById(currentItemId).addEventListener('click', function() {
+            var nextItem = document.getElementById(nextItemId);
+            nextItem.style.display = 'block';
+            nextItem.classList.add('fade-in'); // Añadir clase para animación
+        });
+    }
+
+    // Inicializar la interactividad
+    showNextItemWithAnimation('item-arbol', 'item-gestor');
+    showNextItemWithAnimation('item-gestor', 'item-recursos');
+    showNextItemWithAnimation('item-recursos', 'item-tareas');
+    showNextItemWithAnimation('item-tareas', 'item-tarjeta-control');
+</script>
+{% endblock %}

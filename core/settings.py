@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'planner',
     'procesos',
     'bugs',
+    'django_select2',
 ]
 
 MIDDLEWARE = [

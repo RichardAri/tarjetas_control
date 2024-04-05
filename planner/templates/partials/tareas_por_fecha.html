@@ -1,0 +1,15 @@
+<!-- tareas_por_fecha.html -->
+<div>
+    {% if tareas %}
+        {% for tarea in tareas %}
+            <div class="tarea">
+                <!-- Muestra los detalles de la tarea aquí -->
+                <h3>{{ tarea.verbo }}</h3>
+                <p>{{ tarea.objeto }}</p>
+                <!-- Agrega más campos según sea necesario -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay tareas para esta tarjeta.</p>
+    {% endif %}
+</div>

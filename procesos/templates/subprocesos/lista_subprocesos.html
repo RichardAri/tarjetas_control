@@ -37,6 +37,7 @@
 <!-- Contenido principal -->
 <div class="container">
     <h2>Lista de Sub procesos</h2>
+    <h3>Crear proceso <a href="">asdasdas</a></h3>
     <table id="miTablaDeProcesos" class="display table table-striped table-bordered">
       <thead>
           <tr>
@@ -52,6 +53,8 @@
                   <!-- Botones Editar y Eliminar -->
                   <a href="" class="btn btn-primary btn-sm">Editar</a>
                   <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                  <a href="{% url 'ver_subproceso' subproceso.id %}" class="btn btn-info btn-sm">Ver Detalles</a>
+
               </td>
           </tr>
           {% endfor %}
@@ -69,18 +72,24 @@
 
 <script>
     $(document).ready(function() {
-        $('#miTablaDeProcesos').DataTable({
-            responsive: true
-        });
+    $('#miTablaDeProcesos').DataTable({
+        responsive: true,
+        autoWidth: true,
+        pageLength: 15,  // Número de filas inicial por página
+        lengthMenu: [[, 10, 15, -1], [5, 10, 15, "Todas"]],
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json"
+        }
     });
+});
 </script>
 <script>
-  $('.btn-danger').on('click', function(e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    if (confirm('¿Estás seguro de que quieres eliminar este proceso?')) {
-        window.location.href = url;
-    }
+$('.btn-danger').on('click', function(e) {
+  e.preventDefault();
+  var url = $(this).attr('href');
+  if (confirm('¿Estás seguro de que quieres eliminar este proceso?')) {
+      window.location.href = url;
+  }
 });
 
 </script>
