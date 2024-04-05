@@ -3,7 +3,6 @@ from cuentas.models import UserProfile
 from modelos.models import Tarea
 from django.db.models import Sum
 
-
 class TarjetaDiaria(models.Model):
     DURACION_JORNADA = [
         (8, '8 horas'),
@@ -11,7 +10,7 @@ class TarjetaDiaria(models.Model):
     ]
     usuario = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     fecha = models.DateField()
-    tareas = models.ManyToManyField(Tarea, related_name='tarjetas_diarias', blank=True)
+    tareas = models.ManyToManyField(Tarea, related_name='tarjetas_diarias', blank=True, through='TarjetaOrdenDiario')
     total_minutos = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     duracion_jornada = models.IntegerField(choices=DURACION_JORNADA, default=8)
 
@@ -37,3 +36,13 @@ class TarjetaDiaria(models.Model):
 
     def __str__(self):
         return f'Tarjeta de {self.usuario.user.username} - {self.fecha}'
+    
+
+
+class TarjetaOrdenDiario(models.Model):
+    tarjetadiaria = models.ForeignKey(TarjetaDiaria, on_delete=models.CASCADE)
+    tareaorden = models.ForeignKey(Tarea, on_delete=models.CASCADE)
+    order = models.PositiveSmallIntegerField()
+
+    class Meta:
+        ordering = ['order']
