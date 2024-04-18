@@ -6,6 +6,12 @@
 
 {% block content %}
 <style>
+
+    .container {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
     .table-custom {
         border-collapse: collapse;
         width: 100%;
@@ -32,32 +38,33 @@
         padding-bottom: 12px;
     }
 </style>
+<div class="container">
+    <h1 class="mb-4 text-primary">Añadir Seguridad</h1>
 
-<h1 class="mb-4 text-primary">Añadir Seguridad</h1>
+    <div id="seguridad-forms">
+        {% include 'partials/form_seguridad.html' %}
+    </div>
 
-<div id="seguridad-forms">
-    {% include 'partials/form_seguridad.html' %}
+    <div class="my-4">
+        <button type="button" class="btn btn-success me-2" hx-get="{% url 'create-seguridad' %}" hx-target="#seguridad-forms" hx-swap="beforeend">Crear formulario</button> 
+        <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>
+    </div>
+
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>Clase de Seguridad</th>
+                <th>Peligro</th>
+                <th>Riesgo</th>
+                <th>Control</th>
+            </tr>
+        </thead>
+        <tbody id="seguridad-list">
+            {% for seguridad in seguridades %}
+                {% include 'partials/seguridad.html' %}
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<div class="my-4">
-    <button type="button" class="btn btn-success me-2" hx-get="{% url 'create-seguridad' %}" hx-target="#seguridad-forms" hx-swap="beforeend">Crear formulario</button> 
-    <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>
-</div>
-
-<table class="table-custom">
-    <thead>
-        <tr>
-            <th>Clase de Seguridad</th>
-            <th>Peligro</th>
-            <th>Riesgo</th>
-            <th>Control</th>
-        </tr>
-    </thead>
-    <tbody id="seguridad-list">
-        {% for seguridad in seguridades %}
-            {% include 'partials/seguridad.html' %}
-        {% endfor %}
-    </tbody>
-</table>
 
 {% endblock %}
