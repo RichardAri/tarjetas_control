@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'procesos',
     'bugs',
     'django_select2',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

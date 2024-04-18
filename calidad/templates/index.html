@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    CAlidad
+    Calidad
 {% endblock %}
 
 {% block content %}
 <style>
-    .table-custom {
+
+    .container {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .table-custom{
         border-collapse: collapse;
         width: 100%;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         border-radius: 8px;
         overflow: hidden;
+        padding: auto 10px;
     }
     .table-custom th, .table-custom td {
         text-align: left;
@@ -32,40 +39,38 @@
         padding-bottom: 12px;
     }
 </style>
+    <div class="container">  
+        <!-- Aquí va el contenido específico de la página de Recursos de Calidad -->
+        <h1 class="containermb-4 text-primary">Añadir Recurso de calidad</h1>
 
-    <!-- Aquí va el contenido específico de la página de Recursos de Calidad -->
-    <h1 class="mb-4 text-primary">Añadir Recurso de calidad</h1>
+        <div id="recursos-forms">
+            {% include 'partials/form.html' %}
+        </div>
 
-    <div id="recursos-forms">
-        {% include 'partials/form.html' %}
+        <div class="my-4">
+            <button type="button" class="btn btn-success me-2"
+            hx-get="{% url 'create-recurso' %}"
+            hx-target="#recursos-forms"
+            hx-swap="beforeend">Añadir Recurso</button>
+        </div>
+        <table class="table-custom">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Peligro de Calidad</th>
+                    <th>Riesgo de Calidad</th>
+                    <th>Causas de Calidad</th>
+                    <th>Control de Calidad</th>
+                </tr>
+            </thead>
+            <tbody id="recurso-list">
+                {% for recurso in recursos %}
+                    {% include 'partials/recurso.html' %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+
     </div>
-
-    <div class="my-4">
-        <button type="button" class="btn btn-success me-2"
-        hx-get="{% url 'create-recurso' %}"
-        hx-target="#recursos-forms"
-        hx-swap="beforeend">Añadir Recurso</button>
-    </div>
-
-<!-- Suponiendo que este código esté en tu template principal donde iteras sobre recursos -->
-<div class="container mt-4">
-    <table class="table-custom">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Peligro de Calidad</th>
-                <th>Riesgo de Calidad</th>
-                <th>Causas de Calidad</th>
-                <th>Control de Calidad</th>
-            </tr>
-        </thead>
-        <tbody id="recurso-list">
-            {% for recurso in recursos %}
-                {% include 'partials/recurso.html' %}
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
 
 {% endblock %}

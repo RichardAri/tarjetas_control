@@ -1,5 +1,5 @@
 from django.urls import include, path
-from .views import crear_proceso, mi_vista_compleja, lista_procesos, lista_subprocesos, lista_tareas # Asegúrate de importar la vista correctamente
+from .views import crear_proceso, mi_vista_compleja, lista_procesos, lista_subprocesos, lista_tareas, eliminar_proceso # Asegúrate de importar la vista correctamente
 from . import views
 
 urlpatterns = [
@@ -7,8 +7,12 @@ urlpatterns = [
     path('procesos/<int:proceso_id>/<int:subproceso_id>/', mi_vista_compleja, name='procesos_con_id'),
     path('procesos/<int:proceso_id>/', mi_vista_compleja, name='procesos_con_id'),
 
-    #lista procesos
+    #metodos de procesos
     path('lista_procesos/', lista_procesos, name='lista_procesos'),
+    path('eliminar_proceso/<int:proceso_id>/', eliminar_proceso, name='eliminar_proceso'),
+    path('proceso/<int:proceso_id>/editar/', views.editar_proceso, name='editar_proceso'),
+
+   
     #lista de subprocesos
     path('lista_subprocesos/', lista_subprocesos, name='lista_subprocesos'),
     #lista de tareas

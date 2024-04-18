@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.http import HttpResponse
 from cuentas.models import UserProfile
 from modelos.models import Tarea
@@ -8,6 +9,22 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.utils import timezone
 import calendar
+import requests
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+
+#### consumo de api rest
+class ListaOrdenVentaAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        response = requests.get('https://seiren.awlmaquitec.com/ordenventa/ordenesventa/')
+        if response.status_code == 200:
+            ordenes = response.json()
+            return Response(ordenes)
+        else:
+            return Response(response.json(), status=response.status_code)
+
 
 
 # Create your views here.
@@ -50,8 +67,41 @@ def lista_tareas(request):
 # para ver una tarjeta sola y sus atributos correspondientes
 def tarjeta_diaria_detail(request, id):
     tarjeta = get_object_or_404(TarjetaDiaria, pk=id)
-    return render(request, 'tarjetadiaria/tarjeta_diaria_detail.html', {'tarjeta': tarjeta})
+    hora_inicio = datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)
 
+    tareas_con_horario = []
+    for tarea in tarjeta.tareas.all():
+        inicio_tarea = hora_inicio.strftime("%H:%M")
+        tareas_con_horario.append({
+            'tarea': tarea,
+            'inicio': inicio_tarea
+        })
+
+        # Convertir tiempo de tarea a entero o float
+        minutos_tarea = int(tarea.tiempo_tarea) if tarea.tiempo_tarea is not None else 0
+        hora_inicio += timedelta(minutes=minutos_tarea)
+
+    response = requests.get('https://seiren.awlmaquitec.com/ordenventa/ordenesventa/')
+    if response.status_code == 200:
+        datos_api = response.json()
+
+        # Procesar los datos para obtener solo lo necesario
+        ordenes_venta = [
+            {
+                'codigosap': orden['codigosap'],
+                'proyecto': orden['proyecto'],
+                'observacion': orden['observacion']
+            }
+            for orden in datos_api
+        ]
+    else:
+        ordenes_venta = []
+
+    return render(request, 'tarjetadiaria/tarjeta_diaria_detail.html', {
+        'tarjeta': tarjeta,
+        'tareas_con_horario': tareas_con_horario,
+        'ordenes_venta': ordenes_venta  # Lista procesada
+    })
 
 def tareas_por_tarjeta(request, tarjeta_id):
     tarjeta = TarjetaDiaria.objects.get(id=tarjeta_id)
@@ -118,3 +168,7 @@ def crear_o_editar_tarjeta_diaria(request):
         return render(request, 'formulario_tarjeta_diaria.html', {'form': form})
     else:
         return render(request, 'ver_tarjetas_diarias.html', {'form': form})
+    
+
+
+

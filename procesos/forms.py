@@ -40,6 +40,23 @@ class ProcesoForm(forms.ModelForm):
         )
 
 
+class ProcesoEditForm(forms.ModelForm):
+    subprocesos = forms.ModelMultipleChoiceField(
+        queryset=Subproceso.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    tareas = forms.ModelMultipleChoiceField(
+        queryset=Tarea.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
+
+    class Meta:
+        model = Proceso
+        fields = ['nombre', 'subprocesos', 'tareas']
+
 
 
 class SubprocesoForm(forms.ModelForm):

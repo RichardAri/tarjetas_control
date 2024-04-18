@@ -28,13 +28,11 @@
             }
         
             .container {
-    /* Usa Flexbox */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh; /* Asegura que el contenedor tenga la altura de la pantalla */
-    margin:0 auto; /* Centrado horizontal si es necesario */
-    padding: 0;
-}
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
 
             .login-container, .card {
                 max-width: 400px;

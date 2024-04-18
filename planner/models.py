@@ -10,7 +10,7 @@ class TarjetaDiaria(models.Model):
     ]
     usuario = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     fecha = models.DateField()
-    tareas = models.ManyToManyField(Tarea, related_name='tarjetas_diarias', blank=True, through='TarjetaOrdenDiario')
+    tareas = models.ManyToManyField(Tarea, related_name='tarjetas_diarias', blank=True,)
     total_minutos = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     duracion_jornada = models.IntegerField(choices=DURACION_JORNADA, default=8)
 
@@ -36,7 +36,7 @@ class TarjetaDiaria(models.Model):
 
     def __str__(self):
         return f'Tarjeta de {self.usuario.user.username} - {self.fecha}'
-    
+        
 
 
 class TarjetaOrdenDiario(models.Model):

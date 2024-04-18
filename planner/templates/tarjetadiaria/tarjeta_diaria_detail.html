@@ -47,9 +47,17 @@
         color: blue;
         font-weight: bold;
     }
+    .orden-venta {
+        width: 120px; /* Ancho máximo para el select */
+        max-width: 100%; /* Asegúrate de que no se desborde de su contenedor */
+        /* Otros estilos que desees agregar */
+    }
+
+    
+
+
 </style>
 {% endblock %}
-
 
 
 {% block content %}
@@ -59,22 +67,29 @@
 <p>Duración Jornada: {{ tarjeta.duracion_jornada }} horas</p>
 <p>Total Minutos: {{ tarjeta.total_minutos }}</p>
 <p>Horas y Minutos: {{ tarjeta.horas_y_minutos }}</p>
+
 <form class="sortable" hx-post="/ruta_para_ordenar_tareas" hx-trigger="end">
     <div class="htmx-indicator">Updating...</div>
-    {% for tarea in tarjeta.tareas.all %}
-        <div>
-            <input type='hidden' name='item' value='{{ tarea.id }}'/>
-            {{ tarea.verbo }} - {{ tarea.objeto }} - 
-            {% if tarea.tiempo_tarea %}{{ tarea.tiempo_tarea }} minutos{% else %}Tiempo no especificado{% endif %} - 
-            Subprocesos: {{ tarea.subproceso.all|join:", " }} - 
-            Recursos Totales: 
-            {{ tarea.recurso_seguridad.all|join:", " }},
-            {{ tarea.recurso_calidad.all|join:", " }},
-            {{ tarea.recurso_operativo.all|join:", " }}
-        </div>
-    {% endfor %}
+    {% for item in tareas_con_horario %}
+    <div>
+        <!-- Lista desplegable para seleccionar la orden de venta -->
+        <select name="orden_venta" class="orden-venta">
+            {% for orden in ordenes_venta %}
+                <option value="{{ orden.codigosap }}">
+                    {{ orden.codigosap }} - {{ orden.proyecto }} - {{ orden.observacion }}
+                </option>
+            {% endfor %}
+        </select>
+        
+        <!-- Información de la tarea -->
+        Hora de Inicio: {{ item.inicio }} - {{ item.tarea.verbo }} - {{ item.tarea.objeto }}
+        <!-- ... otros detalles de la tarea ... -->
+    </div>
+{% endfor %}
+
 </form>
 {% endblock %}
+
 
 {% block extra_js %}
     <!-- Aquí puedes incluir JavaScript adicional específico para esta página -->

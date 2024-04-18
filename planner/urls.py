@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
+from .views import ListaOrdenVentaAPIView
 
 urlpatterns = [
     path('', views.index_planner, name='index_planner'),
@@ -14,6 +15,10 @@ urlpatterns = [
     # prueva de hoover
     path('tarjetas/<int:tarjeta_id>/', views.tareas_por_tarjeta, name='tareas_por_tarjeta'),
     path('tarjeta-diaria/<int:id>/', views.tarjeta_diaria_detail, name='tarjeta-diaria-detail'),
+
+    # consumo api rest:
+    path('api/', ListaOrdenVentaAPIView.as_view(), name='ordenesventa-lista'),
+
 
 
 

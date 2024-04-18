@@ -1,8 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import ProcesoForm, SubprocesoForm, TareaPruebaForm
 from .models import Proceso, Subproceso
 from modelos.models import Tarea
-from .forms import ProcesosForm
+from .forms import ProcesosForm, ProcesoEditForm
 
 # ver procesos creados 
 def lista_procesos(request):
@@ -34,6 +35,29 @@ def crear_proceso(request):
         form = ProcesosForm()
 
     return render(request, 'procesos/crear_proceso.html', {'form': form})
+
+def eliminar_proceso(request, proceso_id):
+    proceso = get_object_or_404(Proceso, pk=proceso_id)
+    if request.method == 'POST':
+        proceso.delete()
+        return HttpResponse('')  # Respuesta vacía para HTMX
+    else:
+        return redirect('lista_procesos') 
+    
+def editar_proceso(request, proceso_id):
+    proceso = get_object_or_404(Proceso, pk=proceso_id)
+    if request.method == 'POST':
+        form = ProcesoEditForm(request.POST, instance=proceso)
+        if form.is_valid():
+            proceso = form.save()
+            proceso.subprocesos.set(form.cleaned_data['subprocesos'])
+            proceso.tareas.set(form.cleaned_data['tareas'])
+            return redirect('lista_procesos')
+    else:
+        form = ProcesoEditForm(instance=proceso)
+        
+    return render(request, 'procesos/editar_proceso.html', {'form': form})
+
 
 
 # acaba procesos 

@@ -18,6 +18,7 @@
       #miTablaDeProcesos th, #miTablaDeProcesos td {
           border: 1px solid #ddd; /* Bordes de las celdas */
           padding: 8px;
+          Color: white;
       }
 
       #miTablaDeProcesos th {
@@ -58,8 +59,15 @@
                 <td>{{ proceso.nombre }}</td>
                 <td>
                     <!-- Botones Editar y Eliminar -->
-                    <a href="" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="" class="btn btn-danger btn-sm">Eliminar</a>
+                    <a href="{% url 'editar_proceso' proceso.id %}" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="{% url 'eliminar_proceso' proceso.id %}"
+                    class="btn btn-danger btn-sm"
+                    hx-post="{% url 'eliminar_proceso' proceso.id %}"
+                    hx-confirm="¿Estás seguro de que quieres eliminar este proceso?"
+                    hx-target="#miTablaDeProcesos"
+                    hx-swap="outerHTML">Eliminar
+                    </a>
+
                     <a href="{% url 'ver_proceso' proceso.id %}" class="btn btn-info btn-sm">Ver Detalles</a>
                 </td>
             </tr>
@@ -89,14 +97,5 @@
         });
     });
 </script>
-  <script>
-    $('.btn-danger').on('click', function(e) {
-      e.preventDefault();
-      var url = $(this).attr('href');
-      if (confirm('¿Estás seguro de que quieres eliminar este proceso?')) {
-          window.location.href = url;
-      }
-  });
 
-  </script>
   {% endblock %}
