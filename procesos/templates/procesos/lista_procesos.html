@@ -18,7 +18,7 @@
       #miTablaDeProcesos th, #miTablaDeProcesos td {
           border: 1px solid #ddd; /* Bordes de las celdas */
           padding: 8px;
-          Color: white;
+          background-color: white;
       }
 
       #miTablaDeProcesos th {
@@ -28,15 +28,16 @@
       }
 
       /* Estilos para el hover en filas */
-      #miTablaDeProcesos tr:hover {
-          background-color: #ddd;
+      #miTablaDeProcesos tr:hover tr{
+          background-color: #ff0000;
       }
+
   </style>
   {% endblock %}
 
   {% block content %}
   <!-- Contenido principal -->  
-  <div class="container">
+  <div>
     <div class="row">
         <div class="col-md-6">
             <h2>Procesos</h2>
