@@ -1,5 +1,5 @@
 <form hx-post="{% url 'create-seguridad' %}" hx-target="#seguridad-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
-    <div class="row">
+    <div class="row ">
         <div class="col-3 col-md-2">
             <label for="{{ form.clase_seguridad.id_for_label }}"> {{ form.clase_seguridad.label }}</label>
             {{ form.clase_seguridad }}
