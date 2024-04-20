@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'seguridad',
     'tareas',
     'tarjetas_control',
-    'guias',
+    'servicios',
     'django_htmx',
     'cuentas',
     'crispy_forms',

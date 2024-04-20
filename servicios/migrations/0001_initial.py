@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('fecha', models.DateField()),
                 ('costo', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('estado', models.CharField(choices=[('en_curso', 'En curso'), ('terminado', 'Terminado')], default='en_curso', max_length=20)),
-                ('equipos_necesarios', models.ManyToManyField(to='guias.equipo')),
+                ('equipos_necesarios', models.ManyToManyField(to='servicios.equipo')),
             ],
         ),
     ]

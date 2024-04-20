@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class GuiasConfig(AppConfig):
+class ServiciosConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'guias'
+    name = 'servicios'

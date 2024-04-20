@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
-from guias.forms import EquipoForm, ServicioForm
-from guias.models import Equipo, Servicio
+from servicios.forms import EquipoForm, ServicioForm
+from servicios.models import Equipo, Servicio
 
 # Create your views here.
 #HTMX METHODS
@@ -35,19 +35,17 @@ def crear_servicio(request):
             return redirect('crear-servicio')
     else:
         form = ServicioForm()
-    return render(request, 'servicios/crear_servicio.html', {'form': form})
+    return render(request, 'Servicios/crear_servicio.html', {'form': form})
 
 def detalle_servicio(request, servicio_id):
     servicio = get_object_or_404(Servicio, id=servicio_id)
     # No es necesario recuperar los recursos asociados de manera explícita aquí,
     # ya que se pueden acceder directamente desde el objeto 'tarea' en el template.
-    return render(request, 'servicios/detalle_servicio.html', {'servicio': servicio})
+    return render(request, 'Servicios/detalle_servicio.html', {'servicio': servicio})
 
 def listar_servicios(request):
     servicios = Servicio.objects.all()
-    return render(request, 'servicios/listar_servicios.html', {'servicios': servicios})
-
-from django.http import JsonResponse
+    return render(request, 'Servicios/listar_servicios.html', {'servicios': servicios})
 
 def actualizar_cantidad_equipo(request, equipo_id):
     equipo = Equipo.objects.get(pk=equipo_id)
