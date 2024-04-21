@@ -19,10 +19,12 @@ from django.urls import include, path
 from core.views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('', auth_views.LoginView.as_view(), name='login'),
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path('home/', home, name='home'),
         # Incluye las URLs de cada aplicación
     path('calidad/', include('calidad.urls')),
     path('modelos/', include('modelos.urls')),
@@ -36,4 +38,7 @@ urlpatterns = [
     path('procesos/', include('procesos.urls')),
     path('bugs/', include('bugs.urls')),
     path("select2/", include("django_select2.urls")),
+    path('accounts/logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+LOGIN_REDIRECT_URL = '/home/'

@@ -13,9 +13,8 @@ import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-
-
 #### consumo de api rest
+
 class ListaOrdenVentaAPIView(APIView):
     def get(self, request, *args, **kwargs):
         response = requests.get('https://seiren.awlmaquitec.com/ordenventa/ordenesventa/')
@@ -31,7 +30,7 @@ class ListaOrdenVentaAPIView(APIView):
 def index_planner(request):
     return render(request, 'index_planner.html')
 
-
+@login_required
 def ver_tarjetas_diarias(request):
     usuario = request.user
     hoy = timezone.now()
@@ -58,13 +57,14 @@ def ver_tarjetas_diarias(request):
         'espacios_vacios': espacios_vacios,
     })
 
-
+@login_required
 def lista_tareas(request):
     tareas = Tarea.objects.all()  # Asume que ya tienes un modelo Tarea
     return render(request, 'lista_tareas.html', {'tareas': tareas})
 
 
 # para ver una tarjeta sola y sus atributos correspondientes
+@login_required
 def tarjeta_diaria_detail(request, id):
     tarjeta = get_object_or_404(TarjetaDiaria, pk=id)
     hora_inicio = datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)
@@ -103,13 +103,11 @@ def tarjeta_diaria_detail(request, id):
         'ordenes_venta': ordenes_venta  # Lista procesada
     })
 
+@login_required
 def tareas_por_tarjeta(request, tarjeta_id):
     tarjeta = TarjetaDiaria.objects.get(id=tarjeta_id)
     tareas = tarjeta.tareas.all()  # Obtiene todas las tareas asociadas a la tarjeta
     return render(request, 'tareas_por_fecha.html', {'tareas': tareas})
-
-
-
 
 @login_required
 def editar_tarjeta_diaria(request, tarjeta_id):  # Cambio de nombre para reflejar mejor la función
@@ -168,7 +166,3 @@ def crear_o_editar_tarjeta_diaria(request):
         return render(request, 'formulario_tarjeta_diaria.html', {'form': form})
     else:
         return render(request, 'ver_tarjetas_diarias.html', {'form': form})
-    
-
-
-

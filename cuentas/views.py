@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-
 from cuentas.models import UserProfile
 from .forms import UserRegistrationForm  # Asegúrate de haber creado este formulario
 from django.shortcuts import render, redirect

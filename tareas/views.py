@@ -2,12 +2,15 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from modelos.models import Tarea
 from tareas.forms import TareaForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def index(request):
     # Aquí puedes colocar cualquier lógica adicional que necesites
     return HttpResponse("¡Bienvenido tareas!")
 
+@login_required
 def crear_tarea(request):
     if request.method == 'POST':
         form = TareaForm(request.POST)
@@ -24,16 +27,19 @@ def crear_tarea(request):
         form = TareaForm()
     return render(request, 'crear_tarea.html', {'form': form})
 
+@login_required
 def detalle_tarea(request, tarea_id):
     tarea = get_object_or_404(Tarea, id=tarea_id)
     # No es necesario recuperar los recursos asociados de manera explícita aquí,
     # ya que se pueden acceder directamente desde el objeto 'tarea' en el template.
     return render(request, 'detalle_tarea.html', {'tarea': tarea})
 
+@login_required
 def listar_tareas(request):
     tareas = Tarea.objects.all()
     return render(request, 'listar_tareas.html', {'tareas': tareas})
 
+@login_required
 def editar_tarea(request, tarea_id):
     tarea = get_object_or_404(Tarea, id=tarea_id)
     
@@ -61,7 +67,7 @@ def editar_tarea(request, tarea_id):
     
     return render(request, 'editar_tarea.html', {'form': form, 'tarea_id': tarea_id})
 
-
+@login_required
 def editar_tarea_nuevo(request, tarea_id):
     tarea = get_object_or_404(Tarea, pk=tarea_id)
     if request.method == 'POST':

@@ -2,7 +2,10 @@ from django.shortcuts import redirect, render
 from .forms import BugReportForm
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def report_bug(request):
     if request.method == 'POST':
         form = BugReportForm(request.POST, request.FILES)

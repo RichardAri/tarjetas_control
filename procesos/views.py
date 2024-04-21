@@ -4,12 +4,15 @@ from .forms import ProcesoForm, SubprocesoForm, TareaPruebaForm
 from .models import Proceso, Subproceso
 from modelos.models import Tarea
 from .forms import ProcesosForm, ProcesoEditForm
+from django.contrib.auth.decorators import login_required
 
 # ver procesos creados 
+@login_required
 def lista_procesos(request):
     procesos = Proceso.objects.all()
     return render(request, 'procesos/lista_procesos.html', {'procesos': procesos})
 
+@login_required
 def ver_proceso(request, proceso_id):
     proceso = get_object_or_404(Proceso, pk=proceso_id)
     subprocesos = proceso.subprocesos.all()  # Ajusta esto según tu modelo
@@ -19,6 +22,7 @@ def ver_proceso(request, proceso_id):
         'subprocesos': subprocesos
     })
 
+@login_required
 def crear_proceso(request):
     if request.method == 'POST':
         form = ProcesosForm(request.POST)
@@ -36,6 +40,7 @@ def crear_proceso(request):
 
     return render(request, 'procesos/crear_proceso.html', {'form': form})
 
+@login_required
 def eliminar_proceso(request, proceso_id):
     proceso = get_object_or_404(Proceso, pk=proceso_id)
     if request.method == 'POST':
@@ -44,6 +49,7 @@ def eliminar_proceso(request, proceso_id):
     else:
         return redirect('lista_procesos') 
     
+@login_required
 def editar_proceso(request, proceso_id):
     proceso = get_object_or_404(Proceso, pk=proceso_id)
     if request.method == 'POST':
@@ -65,10 +71,12 @@ def editar_proceso(request, proceso_id):
 
 
 # lista subprocesos creados 
+@login_required
 def lista_subprocesos(request):
     subprocesos = Subproceso.objects.all()
     return render(request, 'subprocesos/lista_subprocesos.html', {'subprocesos': subprocesos})
 
+@login_required
 def ver_subproceso(request, subproceso_id):
     subproceso = get_object_or_404(Subproceso, pk=subproceso_id)
     tareas = subproceso.tareas.all()  # Esto recupera todas las tareas relacionadas
@@ -82,6 +90,7 @@ def ver_subproceso(request, subproceso_id):
 
 
 # lista tareas creados 
+@login_required
 def lista_tareas(request):
     tareas = Tarea.objects.all()
     return render(request, 'tareas/lista_tareas.html', {'tareas': tareas})
@@ -89,7 +98,8 @@ def lista_tareas(request):
 
 # creacion de procesos con subprocesos
 
-#creacion de procesos 
+#creacion de procesos
+@login_required
 def mi_vista_compleja(request, proceso_id=None, subproceso_id=None):
     # Inicializa el formulario de Proceso con un posible proceso existente
     proceso = Proceso.objects.filter(pk=proceso_id).first() if proceso_id else None
@@ -137,14 +147,14 @@ def mi_vista_compleja(request, proceso_id=None, subproceso_id=None):
         'procesos': procesos,
     })
 
+@login_required
 def editar_proceso(request, proceso_id):
     proceso = Proceso.objects.get(id=proceso_id)
     if request.method == 'POST':
         form = ProcesoForm(request.POST, instance=proceso)
         if form.is_valid():
             form.save()
-            # Puedes agregar un mensaje de éxito aquí si lo deseas
-            return redirect('ruta_de_redireccion')  # Especifica la URL a la que deseas redirigir después de guardar los cambios
+            return redirect('procesos/procesos.html') 
     else:
         form = ProcesoForm(instance=proceso)
     

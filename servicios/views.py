@@ -1,16 +1,18 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-
 from servicios.forms import EquipoForm, ServicioForm
 from servicios.models import Equipo, Servicio
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 #HTMX METHODS
+@login_required
 def index(request):
     # Aquí puedes colocar cualquier lógica adicional que necesites
     context = {'form': EquipoForm(), 'equipos': Equipo.objects.all()}
     return render(request, 'index_equipos.html', context)
 
+@login_required
 def create_equipo(request):
     if request.method == 'POST':
         form = EquipoForm(request.POST or None)
@@ -23,6 +25,7 @@ def create_equipo(request):
 
 
 # servicios a partir de aqui:
+@login_required
 def crear_servicio(request):
     if request.method == 'POST':
         form = ServicioForm(request.POST)
@@ -37,16 +40,19 @@ def crear_servicio(request):
         form = ServicioForm()
     return render(request, 'Servicios/crear_servicio.html', {'form': form})
 
+@login_required
 def detalle_servicio(request, servicio_id):
     servicio = get_object_or_404(Servicio, id=servicio_id)
     # No es necesario recuperar los recursos asociados de manera explícita aquí,
     # ya que se pueden acceder directamente desde el objeto 'tarea' en el template.
     return render(request, 'Servicios/detalle_servicio.html', {'servicio': servicio})
 
+@login_required
 def listar_servicios(request):
     servicios = Servicio.objects.all()
     return render(request, 'Servicios/listar_servicios.html', {'servicios': servicios})
 
+@login_required
 def actualizar_cantidad_equipo(request, equipo_id):
     equipo = Equipo.objects.get(pk=equipo_id)
     nueva_cantidad = int(request.POST.get('cantidad'))
@@ -54,7 +60,7 @@ def actualizar_cantidad_equipo(request, equipo_id):
     equipo.save()
     return JsonResponse(equipo.cantidad, safe=False)
 
-
+@login_required
 def eliminar_equipo(request, equipo_id):
     equipo = Equipo.objects.get(pk=equipo_id)
     equipo.delete()
