@@ -137,4 +137,15 @@ def mi_vista_compleja(request, proceso_id=None, subproceso_id=None):
         'procesos': procesos,
     })
 
-
+def editar_proceso(request, proceso_id):
+    proceso = Proceso.objects.get(id=proceso_id)
+    if request.method == 'POST':
+        form = ProcesoForm(request.POST, instance=proceso)
+        if form.is_valid():
+            form.save()
+            # Puedes agregar un mensaje de éxito aquí si lo deseas
+            return redirect('ruta_de_redireccion')  # Especifica la URL a la que deseas redirigir después de guardar los cambios
+    else:
+        form = ProcesoForm(instance=proceso)
+    
+    return render(request, 'procesos/editar_proceso.html', {'form': form, 'proceso': proceso})
