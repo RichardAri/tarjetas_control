@@ -22,7 +22,7 @@ class TarjetaDiariaForm(forms.ModelForm):
 
     def save_m2m(self):
         super(TarjetaDiariaForm, self).save_m2m()
-        self.instance.total_minutos = self.instance.calcular_total_minutos()
+        self.instance.calcular_actualizar_total_minutos()
         self.instance.save()
 
     def save(self, commit=True):
@@ -34,3 +34,9 @@ class TarjetaDiariaForm(forms.ModelForm):
                 tarjeta_diaria.total_minutos = tarjeta_diaria.calcular_total_minutos()
                 tarjeta_diaria.save()  # Guarda nuevamente con el total actualizado
             return tarjeta_diaria
+        
+    def calcular_total_minutos(self):
+        total_minutos = 0
+        for tarea in self.tareas.all():
+            total_minutos += tarea.duracion_minutos
+        return total_minutos
