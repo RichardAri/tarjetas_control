@@ -1,4 +1,26 @@
-{% block content %} {% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block content %} {% load crispy_forms_tags %}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
 <style>
   /* Estilos personalizados aquí */
   * {
@@ -19,7 +41,7 @@
   }
 
   h1 {
-    margin-bottom: 20px;
+    padding: 20px 0px 0px 0px;
   }
 
   .form-group button {
@@ -36,15 +58,23 @@
     background-color: #0056b3; /* Oscurece el botón al pasar el mouse */
   }
 
-</style>
+  .form-horizontal{
+    padding: 20px;
+  }
 
+</style>
+</head>
+<body>
 <div class="register-container">
   <center><h1>REGISTRO</h1></center>
-  <form method="post" class="form-horizontal">
-    {% csrf_token %} {{ form|crispy }}
-    <div class="form-group mt-3">
-      <button type="submit" class="btn btn-primary">Registrar</button>
-    </div>
-  </form>
+    <!-- Crear Proceso -->
+      <form method="post" class="form-horizontal" >
+        {% csrf_token %} {{ form|crispy }}
+        <div class="form-group mt-3">
+          <button type="submit" class="btn btn-primary">Registrar</button>
+        </div>
+        {% endblock %}
+      </form>
 </div>
-{% endblock %}
+<body>
+</html>
