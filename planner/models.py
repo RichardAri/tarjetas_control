@@ -1,6 +1,6 @@
 from django.db import models
 from cuentas.models import UserProfile
-from modelos.models import Tarea
+from tareas.models import Tarea
 from django.db.models import Sum
 
 class TarjetaDiaria(models.Model):

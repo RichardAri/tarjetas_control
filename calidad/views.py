@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from calidad.forms import CalidadForm
-from modelos.models import RecursoCalidad
+from calidad.models import RecursoCalidad
 from django.contrib.auth.decorators import login_required
 
 @login_required

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
-from modelos.models import TarjetaDeControl, Tarea
-
+#from modelos.models import TarjetaDeControl, Tarea
+"""
 class TarjetaDeControlForm(forms.ModelForm):
     tareas = forms.ModelMultipleChoiceField(
         queryset=Tarea.objects.all(),
@@ -13,3 +13,4 @@ class TarjetaDeControlForm(forms.ModelForm):
     class Meta:
         model = TarjetaDeControl
         fields = ['titulo', 'valorizacion', 'tareas']
+"""

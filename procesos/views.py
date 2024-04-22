@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import ProcesoForm, SubprocesoForm, TareaPruebaForm
 from .models import Proceso, Subproceso
-from modelos.models import Tarea
+from tareas.models import Tarea
 from .forms import ProcesosForm, ProcesoEditForm
 from django.contrib.auth.decorators import login_required
 

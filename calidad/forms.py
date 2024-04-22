@@ -1,5 +1,5 @@
 from django import forms
-from modelos.models import RecursoCalidad
+from calidad.models import RecursoCalidad
 
 
 class CalidadForm(forms.ModelForm):

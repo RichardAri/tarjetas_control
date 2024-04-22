@@ -1,5 +1,5 @@
 from django import forms
-from modelos.models import RecursoOperativo
+from operativos.models import RecursoOperativo
 
 class OperativoForm(forms.ModelForm):
     class Meta:

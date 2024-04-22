@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from modelos.models import Tarea
+from tareas.models import Tarea
 from tareas.forms import TareaForm
 from django.contrib.auth.decorators import login_required
 

@@ -1,5 +1,5 @@
 from django import forms
-from modelos.models import RecursoSeguridad
+from seguridad.models import RecursoSeguridad
 
 class SeguridadForm(forms.ModelForm):
     class Meta:

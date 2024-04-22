@@ -1,9 +1,5 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator, MaxValueValidator
-from core import settings
-from procesos.models import Subproceso
 
+"""
 class RecursoSeguridad(models.Model):
     clase_seguridad = models.CharField(max_length=100, blank=True, null=True)
     seguridad_peligro = models.CharField(max_length=100, blank=True, null=True)
@@ -78,3 +74,4 @@ class TarjetaDeControl(models.Model):
 
     
     # Más métodos y propiedades según sea necesario
+"""

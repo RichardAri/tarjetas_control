@@ -1,5 +1,8 @@
 from django import forms
-from modelos.models import Tarea, RecursoSeguridad, RecursoCalidad, RecursoOperativo
+from tareas.models import Tarea
+from seguridad.models import RecursoSeguridad
+from calidad.models import RecursoCalidad
+from operativos.models import RecursoOperativo
 
 class TareaForm(forms.ModelForm):
     recurso_seguridad = forms.ModelMultipleChoiceField(

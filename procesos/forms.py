@@ -1,6 +1,6 @@
 from django import forms
 from .models import Proceso, Subproceso
-from modelos.models import Tarea
+from tareas.models import Tarea
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Row, Column
 from django import forms

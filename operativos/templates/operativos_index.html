@@ -1,62 +1,70 @@
-{% extends 'base.html' %}
+<!-- operativos_index.html -->
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
 <style>
-    .table-custom {
-        border-collapse: collapse;
-        width: 100%;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        border-radius: 8px;
-        overflow: hidden;
-    }
-    .table-custom th, .table-custom td {
-        text-align: left;
-        padding: 8px;
-    }
-    .table-custom thead {
-        background-color: #007bff;
-        color: #ffffff;
-    }
-    .table-custom tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    .table-custom tbody tr:hover {
-        background-color: #ddd;
-    }
-    .table-custom th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
+  .table-custom {
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .table-custom th,
+  .table-custom td {
+    text-align: left;
+    padding: 8px;
+  }
+  .table-custom thead {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  .table-custom tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  .table-custom tbody tr:hover {
+    background-color: #ddd;
+  }
+  .table-custom th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
 </style>
 
 <h1 class="mb-4 text-primary">Añadir Operativos</h1>
 
-<div id="operativo-forms">
-    {% include 'partials/form_operativos.html' %}
-</div>
+<div id="operativo-forms">{% include 'partials/form_operativos.html' %}</div>
 
 <div class="my-4">
-    <button type="button" class="btn btn-success me-2" hx-get="{% url 'create-operativo' %}" hx-target="#operativo-forms" hx-swap="beforeend">Crear formulario</button> 
-    <button type="button" class="btn btn-primary" id="submit-all">Añadir Todos</button>  
+  <button
+    required
+    type="button"
+    class="btn btn-success me-2"
+    hx-get="{% url 'create-operativo' %}"
+    hx-target="#operativo-forms"
+    hx-swap="beforeend"
+  >
+    Crear formulario
+  </button>
+  <button type="button" class="btn btn-primary" id="submit-all">
+    Añadir Todos
+  </button>
 </div>
 
 <table class="table-custom">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Equipos</th>
-            <th>Materiales</th>
-            <th>Herramientas</th>
-            <th>Mano de Obra</th>
-            <th>EPPs</th>
-            <th>Generales</th>
-        </tr>
-    </thead>
-    <tbody id="operativos-list">
-        {% for operativo in operativos %}
-            {% include 'partials/operativos.html' %}
-        {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Equipos</th>
+      <th>Materiales</th>
+      <th>Herramientas</th>
+      <th>Mano de Obra</th>
+      <th>EPPs</th>
+      <th>Generales</th>
+    </tr>
+  </thead>
+  <tbody id="operativos-list">
+    {% for operativo in operativos %} {% include 'partials/operativos.html' %}
+    {% endfor %}
+  </tbody>
 </table>
-
 {% endblock %}

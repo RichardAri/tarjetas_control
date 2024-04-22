@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.http import HttpResponse
 from cuentas.models import UserProfile
-from modelos.models import Tarea
+from tareas.models import Tarea
 from .models import TarjetaDiaria
 from django.shortcuts import get_object_or_404, render, redirect
 from .forms import TarjetaDiariaForm

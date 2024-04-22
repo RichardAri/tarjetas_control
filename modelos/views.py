@@ -1,9 +1,4 @@
 
-
-
-
-
-
 from django.http import HttpResponse
 
 def vista_simple(request):

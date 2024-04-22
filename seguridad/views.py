@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from modelos.models import RecursoSeguridad
+from seguridad.models import RecursoSeguridad
 from seguridad.forms import SeguridadForm
 from django.contrib.auth.decorators import login_required
 

@@ -1,7 +1,7 @@
 # forms.py
 from django import forms
 from .models import TarjetaDiaria
-from modelos.models import Tarea  # Asegúrate de importar los modelos necesarios
+from tareas.models import Tarea  # Asegúrate de importar los modelos necesarios
 from django.db import transaction
 
 class TarjetaDiariaForm(forms.ModelForm):

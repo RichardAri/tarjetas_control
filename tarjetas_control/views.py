@@ -1,10 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.shortcuts import render, redirect, get_object_or_404
-from modelos.models import TarjetaDeControl
-from tarjetas_control.forms import TarjetaDeControlForm
-from django.contrib.auth.decorators import login_required
 
+
+"""
 # Create your views here.
 def index(request):
     # Aquí puedes colocar cualquier lógica adicional que necesites
@@ -56,3 +52,4 @@ def detalle_tarjeta_control(request, tarjeta_id):
         tarjeta = get_object_or_404(TarjetaDeControl, id=tarjeta_id, usuario=request.user)
     return render(request, 'detalle_tarjeta_control.html', {'tarjeta': tarjeta})
 
+"""

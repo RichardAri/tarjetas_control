@@ -1,44 +1,63 @@
-<form hx-post="{% url 'create-operativo' %}" hx-target="#operativos-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all">
+<!-- form-operativos.html -->
+<style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+</style>
+<form hx-post="{% url 'create-operativo' %}" hx-target="#operativos-list" hx-swap="beforeend" hx-on="htmx:afterRequest: this.remove()" hx-trigger="click from:#submit-all" required>
     <div class="d-flex flex-row flex-nowrap overflow-auto align-items-center">
         <!-- Nombre -->
         <div class="p-2">
-            <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
+            <label for="{{ form.nombre.id_for_label }}" class="form-label" required>{{ form.nombre.label }}</label>
             {{ form.nombre }}
         </div>
         
         <!-- Equipos -->
         <div class="p-2">
-            <label for="{{ form.operativo_equipos.id_for_label }}" class="form-label">Equipos</label>
+            <label for="{{ form.operativo_equipos.id_for_label }}" class="form-label" required>Equipos</label>
             {{ form.operativo_equipos }}
         </div>
         
         <!-- Materiales -->
         <div class="p-2">
-            <label for="{{ form.operativo_materiales.id_for_label }}" class="form-label">Materiales</label>
+            <label for="{{ form.operativo_materiales.id_for_label }}" class="form-label" required>Materiales</label>
             {{ form.operativo_materiales }}
         </div>
         
         <!-- Herramientas -->
         <div class="p-2">
-            <label for="{{ form.operativo_herramientas.id_for_label }}" class="form-label">Herramientas</label>
+            <label for="{{ form.operativo_herramientas.id_for_label }}" class="form-label" required>Herramientas</label>
             {{ form.operativo_herramientas }}
         </div>
         
         <!-- Mano de Obra -->
         <div class="p-2">
-            <label for="{{ form.operativo_manodeobra.id_for_label }}" class="form-label">Mano de obra</label>
+            <label for="{{ form.operativo_manodeobra.id_for_label }}" class="form-label" required>Mano de obra</label>
             {{ form.operativo_manodeobra }}
         </div>
         
         <!-- EPPs -->
         <div class="p-2">
-            <label for="{{ form.operativo_epps.id_for_label }}" class="form-label">EPPs</label>
+            <label for="{{ form.operativo_epps.id_for_label }}" class="form-label" required>EPPs</label>
             {{ form.operativo_epps }}
         </div>
         
         <!-- Generales -->
         <div class="p-2">
-            <label for="{{ form.operativo_generales.id_for_label }}" class="form-label">Generales</label>
+            <label for="{{ form.operativo_generales.id_for_label }}" class="form-label" required>Generales</label>
             {{ form.operativo_generales }}
         </div>
         
@@ -48,3 +67,19 @@
         </div>
     </div>
 </form>
+<script>
+    document.getElementById("submit-all").addEventListener("click", function () {
+        var nombre = document.getElementById("id_nombre").value.trim();
+        var equipos = document.getElementById("id_operativo_equipos").value.trim();
+        var materiales = document.getElementById("id_operativo_materiales").value.trim();
+        var herramientas = document.getElementById("id_operativo_herramientas").value.trim();
+        var manoDeObra = document.getElementById("id_operativo_manodeobra").value.trim();
+        var epps = document.getElementById("id_operativo_epps").value.trim();
+        var generales = document.getElementById("id_operativo_generales").value.trim();
+    
+        if (nombre == "" || equipos == "" || materiales == "" || herramientas == "" || manoDeObra == "" || epps == "" || generales == "") {
+            console.log("Hay datos sin completar---------------------------------")
+            alert("Por favor, completa todos los campos antes de continuar.");
+        }
+    });    
+</script>
