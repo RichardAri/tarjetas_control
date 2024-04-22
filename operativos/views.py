@@ -11,19 +11,6 @@ def index(request):
     context = {'form': OperativoForm(), 'operativos': RecursoOperativo.objects.all()}
     return render(request, 'operativos_index.html', context)
 
-"""
-@login_required
-def create_operativo(request):
-    if request.method == 'POST':
-        form = OperativoForm(request.POST or None)
-        if form.is_valid():
-            operativo = form.save()
-            context = {'operativo': operativo }
-            return render(request, 'partials/operativos.html', context)
-
-
-    return render(request, 'partials/form_operativos.html', {'form': OperativoForm()})   
-"""
 @login_required
 def create_operativo(request):
     if request.method == 'POST':

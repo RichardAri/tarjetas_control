@@ -15,13 +15,18 @@ def index(request):
 @login_required
 def create_seguridad(request):
     if request.method == 'POST':
-        form = SeguridadForm(request.POST or None)
-        if form.is_valid():
+        clase = request.POST.get('clase_seguridad', '').strip()
+        peligro = request.POST.get('seguridad_peligro', '').strip()
+        riesgo = request.POST.get('seguridad_riesgo', '').strip()
+        control = request.POST.get('seguridad_control', '').strip()
+        # Verificar si todos los campos están llenos
+        if clase and peligro and riesgo and control: # Si todos los campos están llenos, crear y guardar el objeto RecursoOperativo
+            form = SeguridadForm(request.POST)
             seguridad = form.save()
-            context = {'seguridad': seguridad}
-            return render(request, "partials/seguridad.html", context)
+            context = {'seguridad': seguridad }
+            return render(request, 'partials/form_seguridad.html', context)  
+    return render(request, 'partials/form_seguridad.html', {'form': SeguridadForm()})   
 
-    return render(request, 'partials/form_seguridad.html', {'form': SeguridadForm()})
 
 # class RecursoSeguridad(models.Model):
 #     nombre = models.CharField(max_length=100, blank=True, null=True)

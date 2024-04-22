@@ -66,5 +66,16 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.getElementById("submit-all").addEventListener("click", function () {
+        var clase = document.getElementById("id_clase_seguridad").value.trim();
+        var peligro = document.getElementById("id_seguridad_peligro").value.trim();
+        var riesgo = document.getElementById("id_seguridad_riesgo").value.trim();
+        var control = document.getElementById("id_seguridad_control").value.trim();
+        if (clase == "" || peligro == "" || riesgo == "" || control == "" ) {
+            alert("Por favor, completa todos los campos antes de continuar.");
+        }
+    });    
+  </script>
 
 {% endblock %}
