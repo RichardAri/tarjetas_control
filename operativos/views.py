@@ -43,3 +43,4 @@ def create_operativo(request):
             context = {'operativo': operativo }
             #return render(request, 'partials/operativos.html', context)
             return render(request, 'partials/form_operativos.html', {'form': OperativoForm()})  
+    return render(request, 'partials/form_operativos.html', {'form': OperativoForm()})   
