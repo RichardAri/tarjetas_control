@@ -163,7 +163,7 @@
 
                         <!-- Botones, ahora dentro del div con display flex -->
                         <a href="{% url 'home' %}" class="btn btn-primary ml-2">Home</a>
-                        <a href="javascript:document.getElementById('logout-form').submit()" class="btn btn-secondary ml-2">Logout</a>
+                        <a href="javascript:document.getElementById('logout-form').submit()"  onclick="logout()" class="btn btn-secondary ml-2">Logout</a>
 
                         <!-- Formulario de Logout -->
                         <form id="logout-form" action="{% url 'logout' %}" method="POST" style="display: none;">
@@ -246,5 +246,10 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/htmx.org"></script>
+        <script>
+            function logout() {
+                document.getElementById('logout-form').submit();
+            }
+        </script>
     </body>
     </html>

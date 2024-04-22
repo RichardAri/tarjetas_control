@@ -12,6 +12,7 @@ import calendar
 import requests
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.contrib.auth import logout
 
 #### consumo de api rest
 
@@ -23,8 +24,6 @@ class ListaOrdenVentaAPIView(APIView):
             return Response(ordenes)
         else:
             return Response(response.json(), status=response.status_code)
-
-
 
 # Create your views here.
 def index_planner(request):
@@ -166,3 +165,9 @@ def crear_o_editar_tarjeta_diaria(request):
         return render(request, 'formulario_tarjeta_diaria.html', {'form': form})
     else:
         return render(request, 'ver_tarjetas_diarias.html', {'form': form})
+
+@login_required
+def vista_logout(request):
+    logout(request)
+    return redirect('login') 
+            
