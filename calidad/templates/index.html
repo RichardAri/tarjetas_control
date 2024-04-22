@@ -72,5 +72,16 @@
 
 
     </div>
-
+    <script>
+        document.getElementById("submit").addEventListener("click", function () {
+            var nombre = document.getElementById("id_nombre").value.trim();
+            var peligro = document.getElementById("id_calidad_peligro").value.trim();
+            var riesgo = document.getElementById("id_calidad_riesgo").value.trim();
+            var causas = document.getElementById("id_calidad_causas").value.trim();
+            var control = document.getElementById("id_calidad_control").value.trim();
+            if (nombre == "" || peligro == "" || riesgo == "" || causas == "" || control == "") {
+                alert("Por favor, completa todos los campos antes de continuar.");
+            }
+        });    
+    </script>
 {% endblock %}
