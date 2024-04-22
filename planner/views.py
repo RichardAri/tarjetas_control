@@ -26,6 +26,7 @@ class ListaOrdenVentaAPIView(APIView):
             return Response(response.json(), status=response.status_code)
 
 # Create your views here.
+@login_required
 def index_planner(request):
     return render(request, 'index_planner.html')
 
