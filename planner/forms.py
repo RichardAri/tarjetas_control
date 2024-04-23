@@ -1,4 +1,4 @@
-# forms.py
+# planner forms.py
 from django import forms
 from .models import TarjetaDiaria
 from tareas.models import Tarea  # Asegúrate de importar los modelos necesarios
@@ -7,7 +7,7 @@ from django.db import transaction
 class TarjetaDiariaForm(forms.ModelForm):
     tareas = forms.ModelMultipleChoiceField(
         queryset=Tarea.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple,
         required=False,
         label='Tareas'
     )

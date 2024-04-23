@@ -1,5 +1,47 @@
-<form id="formulario-tarjeta-diaria" method="post" action="/planner/tarjetas-diarias/editar/{{ tarjeta_id }}/">
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .formulario-div {
+        padding: 20px; /* Ajusta el valor según tu preferencia */
+    }
+</style>
+<form method="post" action="/planner/tarjetas-diarias/editar/{{ tarjeta_id }}/">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="formulario-div">
+        <div class="formulario-div">
+            <label> Fecha: </label>
+            {{ form.fecha }}
+        </div>
+        <div class="formulario-div">
+            <label for="id_tareas">Tareas:</label>
+            <select name="tareas" id="id_tareas" class="select2">
+                {% for tarea in form.tareas.field.queryset %}
+                    <option value="{{ tarea.pk }}">{{ tarea }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="formulario-div">
+            <label> Total Minutos: </label>
+            {{ form.total_minutos }}
+        </div>
+        <div class="formulario-div">
+            <label> Duración Jornada: </label>
+            {{ form.duracion_jornada }}
+        </div>
+    </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: 'Buscar tarea...',
+            allowClear: true,
+            width: '100%',
+        });
+    });
+</script>
+{% endblock %}
+
