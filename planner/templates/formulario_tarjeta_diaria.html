@@ -1,11 +1,6 @@
 
 {% block content %}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-    .formulario-div {
-        padding: 20px; /* Ajusta el valor según tu preferencia */
-    }
-</style>
 <form method="post" action="/planner/tarjetas-diarias/editar/{{ tarjeta_id }}/">
     {% csrf_token %}
     <div class="formulario-div">
