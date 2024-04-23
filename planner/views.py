@@ -16,6 +16,7 @@ from django.contrib.auth import logout
 
 #### consumo de api rest
 
+@login_required
 class ListaOrdenVentaAPIView(APIView):
     def get(self, request, *args, **kwargs):
         response = requests.get('https://seiren.awlmaquitec.com/ordenventa/ordenesventa/')

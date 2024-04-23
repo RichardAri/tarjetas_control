@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 
+# !es registro por eso no usa @login_required
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -29,6 +30,7 @@ def register(request):
         form = UserRegistrationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+# !no puede tener @login_required porque es el envio de login 
 def user_login(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
