@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'operativos',
     'seguridad',
     'tareas',
-    'tarjetas_control',
     'servicios',
     'django_htmx',
     'cuentas',

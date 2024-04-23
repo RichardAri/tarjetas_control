@@ -31,7 +31,6 @@ urlpatterns = [
     path('operativos/', include('operativos.urls')),
     path('seguridad/', include('seguridad.urls')),
     path('tareas/', include('tareas.urls')),
-    path('tarjetas_control/', include('tarjetas_control.urls')),
     path('cuentas/', include('cuentas.urls')),
     path('servicios/', include('servicios.urls')),
     path('planner/', include('planner.urls')),
