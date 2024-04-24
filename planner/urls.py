@@ -10,7 +10,7 @@ urlpatterns = [
     path('tarjetas-diarias/formulario', views.crear_o_editar_tarjeta_diaria, name='cargar_formulario_tarjeta_diaria'),
     path('tarjetas-diarias/guardar', views.crear_o_editar_tarjeta_diaria, name='guardar_tarjeta_diaria'),
 
-    #prueba 
+    #prueba
     path('tarjetas-diarias/editar/<int:tarjeta_id>/', views.editar_tarjeta_diaria, name='editar_tarjeta_diaria'),
     # prueva de hoover
     path('tarjetas/<int:tarjeta_id>/', views.tareas_por_tarjeta, name='tareas_por_tarjeta'),
@@ -18,10 +18,6 @@ urlpatterns = [
 
     # consumo api rest:
     path('api/', ListaOrdenVentaAPIView.as_view(), name='ordenesventa-lista'),
-
-
-
-
-
+    
 ]
     

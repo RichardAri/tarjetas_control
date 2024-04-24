@@ -16,7 +16,8 @@ from django.contrib.auth import logout
 
 #### consumo de api rest
 
-@login_required
+# !@login_required causa que se haga lenta la peticion
+# !y por un segundo colapse la pagina
 class ListaOrdenVentaAPIView(APIView):
     def get(self, request, *args, **kwargs):
         response = requests.get('https://seiren.awlmaquitec.com/ordenventa/ordenesventa/')
@@ -110,6 +111,7 @@ def tareas_por_tarjeta(request, tarjeta_id):
     tareas = tarjeta.tareas.all()  # Obtiene todas las tareas asociadas a la tarjeta
     return render(request, 'tareas_por_fecha.html', {'tareas': tareas})
 
+#! aqui se da el error de carga 
 @login_required
 def editar_tarjeta_diaria(request, tarjeta_id):  # Cambio de nombre para reflejar mejor la función
     tarjeta_diaria = get_object_or_404(TarjetaDiaria, id=tarjeta_id, usuario=request.user.userprofile)
