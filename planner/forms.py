@@ -3,13 +3,7 @@ from django import forms
 from .models import TarjetaDiaria
 from tareas.models import Tarea  # Asegúrate de importar los modelos necesarios
 from django.db import transaction
-from django_select2 import forms as s2forms
 
-class TareasWidget(s2forms.ModelSelect2Widget):
-    search_fields = [
-        "subproceso__icontains",
-        "tareas__icontains",
-    ]
 
 class TarjetaDiariaForm(forms.ModelForm):
     tareas = forms.ModelMultipleChoiceField(
@@ -21,9 +15,8 @@ class TarjetaDiariaForm(forms.ModelForm):
 
     class Meta:
         model = TarjetaDiaria
-        fields = ['fecha', 'tareas', 'total_minutos', 'duracion_jornada']
+        fields = ['fecha', 'Tareas', 'total_minutos', 'duracion_jornada']
         widgets = {
-            'tareas': TareasWidget,
             'total_minutos': forms.NumberInput(attrs={'readonly': True}),
             'duracion_jornada': forms.Select()
         }

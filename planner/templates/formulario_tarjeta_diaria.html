@@ -25,7 +25,6 @@
       {{ form.duracion_jornada }}
     </div>
   </div>
-  <!--   <button type="submit" class="btn btn-primary" onclick="cambiarDataDay({{ tarea_id }})">Guardar</button> -->
   <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 
@@ -38,16 +37,5 @@
       width: "100%",
     });
   });
-</script>
-<script>
-  function cambiarDataDay(nuevoDataDay) {
-            var dayElement = document.querySelector('.day[data-day="' + nuevoDataDay + '"]');
-            if (dayElement) {
-                dayElement.dataset.day = nuevoDataDay;
-                console.log("Atributo data-day cambiado a " + nuevoDataDay);
-            } else {
-                console.log("No se encontró ningún elemento con el atributo data-day igual a " + nuevoDataDay);
-            }
-        }
 </script>
 {% endblock %}

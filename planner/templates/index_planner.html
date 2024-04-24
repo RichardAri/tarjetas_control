@@ -54,20 +54,11 @@
                 var dayDiv = document.createElement("div");
                 dayDiv.classList.add("day");
                 dayDiv.textContent = i;
-                dayDiv.setAttribute("data-d", i);
                 daysContainer.appendChild(dayDiv);
             }
         }
         // Al cargar la página, mostrar los días del mes seleccionado por defecto
-        function cambiarDataDay(nuevoDataDay) {
-            var dayElement = document.querySelector('.day');
-            if (dayElement) {
-                dayElement.dataset.day = nuevoDataDay;
-                console.log("Atributo data-day cambiado a " + nuevoDataDay);
-            } else {
-                console.log("No se encontró ningún elemento con la clase 'day'.");
-            }
-        }
-    </script>
+        showDays();
+        </script>
 </body>
 </html>
